@@ -5,8 +5,7 @@ import SearchSimilarItems from './components/ItemDetailScreen/searchSimilarItems
 function App() {
   return (
     <>
-    <SearchSimilarItems category={'AAA'} tags={['r','j']}/>
-    {/* <div className="App">
+    <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -21,7 +20,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </div> */}
+    </div> 
     </>
   );
 }
