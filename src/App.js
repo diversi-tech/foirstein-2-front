@@ -1,10 +1,12 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import SearchSimilarItems from './components/ItemDetailScreen/searchSimilarItems';
 
 function App() {
   return (
     <>
-    <div className="App">
+    <SearchSimilarItems category={'AAA'} tags={['r','j']}/>
+    {/* <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -19,7 +21,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+    </div> */}
     </>
   );
 }
