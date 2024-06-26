@@ -3,9 +3,9 @@ export const FillData=(value)=>{
 }
 
 export const FillDataCurrentUser=(value)=>{
-    return {type:'FILL_DATA_USER', payload: value}
+    return {type:'FILL_DATA_CURRENT_USER', payload: value}
 }
 
 export const getDataCurrentUser=()=>{
-    return {type:'GET_DATA_USER'}
+    return {type:'GET_DATA_CURRENT_USER'}
 }

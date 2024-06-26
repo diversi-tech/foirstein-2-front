@@ -17,10 +17,10 @@ export const userReducer = produce((state, action) => {
       case 'FILL_DATA':
           state.userList = action.payload;
           break;
-      case 'FILL_DATA_USER':
+      case 'FILL_DATA_CURRENT_USER':
           state.currentUser = action.payload;
           break;
-      case 'GET_DATA_USER':
+      case 'GET_DATA_CURRENT_USER':
           return state.currentUser;
       default:
           return state;
