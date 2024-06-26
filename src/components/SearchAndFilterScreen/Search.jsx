@@ -7,6 +7,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
@@ -15,7 +16,7 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 'auto',
   marginRight: 'auto',
   marginBottom: '1%',
-  width: '40%', 
+  width: '40%',
   display: 'flex',
   alignItems: 'center',
 }));
@@ -28,7 +29,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  textAlign: 'center',
+  left: 0, // Position the icon on the left
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -36,39 +37,32 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`, // Add padding to the left for the icon
     transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
+    fontSize: '1.2rem', // Adjust font size as needed
   },
-  textAlign: 'center',
-  alignItems: 'center',
 }));
 
 export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="...חיפוש"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+        >
+        </Typography>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="חיפוש..."
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
       </AppBar>
     </Box>
   );
