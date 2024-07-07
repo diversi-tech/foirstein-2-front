@@ -1,29 +1,29 @@
-import Filter from "./Filter";
 import SearchAppBar from "./Search";
-import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import PaginatedItemsPage from "./PaginationItems";
-
-const FiltersContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center', // Center the filters horizontally
-  borderRadius: theme.shape.borderRadius,
-  marginTop: '1%',
-}));
+import { useEffect, useState } from "react";
 
 function AllSearchScreen() {
-    return (
-        <>
-            <Container dir="rtl">
-                <SearchAppBar />
-                <FiltersContainer >
-                    <Filter filterBy="תג" />
-                    <Filter filterBy="קטגוריה" />
-                </FiltersContainer>
-            </Container>
-            <PaginatedItemsPage items={items} />
-        </>
-    );
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const storedResult = localStorage.getItem('SearchResult');
+    if (storedResult != null) {
+      const parsedItems = JSON.parse(storedResult);
+      setItems(parsedItems);
+    } else {
+      console.log('No value found in localStorage for key SearchResult');
+    };
+  }, [items]); // Empty dependency array for running the effect only once on mount
+
+  return (
+    <>
+      <Container>
+        <SearchAppBar />
+      </Container>
+      <PaginatedItemsPage items={items} />
+    </>
+  );
 }
 
 export default AllSearchScreen;
