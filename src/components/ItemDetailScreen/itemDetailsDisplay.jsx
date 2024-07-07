@@ -4,7 +4,7 @@ import { Divider, List, ListItemText, ListItem } from '@mui/material';
 
 export default function ItemDetailsDisplay(props) {
 
-  const itemPproperties = {
+  const itemProperties = {
     itemId: 'מספר פריט',
     title: 'כותרת',
     author: 'מחבר',
@@ -34,30 +34,30 @@ export default function ItemDetailsDisplay(props) {
       <List id="itemPropertiesList" sx={style} aria-label="mailbox folders">
         {Object.entries(props.currentItem).map(([key, value], index) => {
           const labelId = `checkbox-list-label-${index}`;
-          const propertyLabel = itemPproperties[key];
+          const propertyLabel = itemProperties[key];
           if (key === 'title') return null;
           return (
-            <>
-              <ListItem className='ListItemDetails' key={key} sx={{ marginTop: '12px' }} disablePadding>
-                <ListItemText id={labelId} sx={{ textAlign: 'right', height: '40px' }}>
+            <React.Fragment key={key}>
+              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px' }}>
+                <ListItemText
+                  id={labelId}
+                  sx={{ textAlign: 'right', height: '40px', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
+                >
                   {key === 'isApproved' ? (
                     <>
-                      <span style={{ margin: '10px' }}>{propertyLabel}:</span>
+                      <span style={{ margin: '10px' }}>{propertyLabel}: </span>
                       <span style={{ margin: '10px' }}>{value ? 'כן' : 'לא'}</span>
                     </>
                   ) : (
                     <>
+                      <span style={{ margin: '10px' }}>{propertyLabel}: </span>
                       <span style={{ margin: '10px' }}>{value}</span>
-                      <span style={{ margin: '10px' }}>:{propertyLabel}</span>
                     </>
                   )}
                 </ListItemText>
               </ListItem>
-              {key !== 'price' && (
-                <Divider component="li" />
-              )}
-
-            </>
+              {key !== 'price' && <Divider component="li" />}
+            </React.Fragment>
           );
         })}
       </List>

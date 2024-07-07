@@ -5,7 +5,7 @@ import axios from 'axios';
 
 async function getTags(itemId) {
   try {
-    const response = await axios.get('https://localhost:7118/api/Item/search?itemId=' + itemId);
+    const response = await axios.get('https://localhost:7118/api/Tag/GetAllTagsByItemId?itemId=' + itemId);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -39,6 +39,7 @@ export default function SearchSimilarItems(props) {
       <FormControl dir='ltr' sx={{ m: 1, minWidth: 120, margin: '0px', width: '100%' }}>
         <InputLabel id="demo-controlled-open-select-label" sx={{ color: 'rgb(128, 126, 123)' }}>חיפוש פריטים דומים</InputLabel>
         <Select
+          dir='rtl'
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           value={selection}
@@ -54,7 +55,7 @@ export default function SearchSimilarItems(props) {
           </ListSubheader>
           {Object.keys(tags).length > 0 && (
             Object.keys(tags).map((tagId) => (
-              <MenuItem dir="rtl" key={tagId} value={tagId}>{tags[tagId]}</MenuItem>
+              <MenuItem dir="rtl" key={tagId} value={tagId}>{tags[tagId].name}</MenuItem>
             ))
           )}
         </Select>
