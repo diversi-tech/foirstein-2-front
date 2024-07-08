@@ -7,8 +7,6 @@ import { alpha, styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import AdvancedSearch from './AdvancedSearch';
-import { Stack } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
