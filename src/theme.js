@@ -69,7 +69,7 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#0D47A1', // כחול עמוק
+      main: '#0D1E46', // כחול עמוק
     },
     secondary: {
       main: '#B71C1C', // אדום נוטה לבורדו
@@ -92,6 +92,7 @@ const theme = createTheme({
       xl: 1920, // מקסימום 2560px
     },
   },
+  // direction: 'rtl',
   components: {
     MuiButton: {
       styleOverrides: {
