@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
-// import { useNavigate } from 'react';
+//import { useNavigate } from 'react';
 
 const Item = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
-    // const navigate = useNavigate();
+ //   const navigate = useNavigate();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const handleBorrowClick = () => {
-        // navigate('/borrow', { state: { item } });
+   //     navigate('/borrow', { state: { item } });
     };
 
     return (
         <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center', marginTop: 1, direction: 'rtl' }}>
-            <Box
+            <Box 
                 sx={{
                     width: '70%',
                     maxWidth: 600,
@@ -45,7 +45,7 @@ const Item = ({ item }) => {
                         onClick={handleExpandClick}
                         sx={{ marginLeft: 1 }}
                     >
-                        {expanded ? 'פחות מידע' : 'מידע נוסף'}
+                        {expanded ? 'פחות מידע' :'מידע נוסף' }
                     </Button>
                     <Button
                         size="small"
@@ -66,4 +66,4 @@ const Item = ({ item }) => {
     );
 };
 
-export default Item;ז
+export default Item;
