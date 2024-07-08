@@ -45,7 +45,6 @@ export default function SearchSimilarItems(props) {
           value={selection}
           label="חיפוש פריטים דומים"
           onChange={handleChange}
-          displayEmpty
           inputProps={{ 'aria-label': 'Select category or tag' }}
         >
           <ListSubheader sx={{ color: 'black', fontStyle: 'italic', textAlign: 'left' }}>קטגוריה</ListSubheader>
