@@ -5,8 +5,8 @@ import Item from './Item';
 const ItemsPage = ({ items }) => {
   return (
     <List>
-      {items.map(item => (
-        <Item key={item.itemId} item={item} />
+      {items.map((item) => (
+        <Item key={item.id} item={item} />
       ))}
     </List>
   );
