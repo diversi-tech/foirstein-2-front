@@ -7,6 +7,9 @@ import { alpha, styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import ClearIcon from '@mui/icons-material/Clear';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import { Stack } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -24,7 +27,7 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 const WrapperedSearchIcon = styled(SearchIcon)(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 1),
   height: '100%',
   display: 'flex',
   alignItems: 'center',
@@ -67,34 +70,46 @@ export default function SearchAppBar() {
     setSearchValue(e.target.value)
   }
 
+  const handleSearchClick = () => {
+    getSearchResult(searchValue);
+  }
+
+  const handleClearClick = () => {
+    setSearchValue('');
+  }
+
   useEffect(() => {
-    // getSearchResult();
   }, [searchValue]);
 
   return (
-    <Box sx={{ flexGrow: 1, direction: 'rtl'}} >
-        <AppBar position="static">
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-          </Typography>
-          <Search sx={{ padding: '1%' }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter')
-                getSearchResult(searchValue)
-            }}>
-            <StyledInputBase
-              placeholder="חיפוש..."
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchValue}
-              onChange={handleValue}
-            />
-            <WrapperedSearchIcon />
+    <Box sx={{ flexGrow: 1, direction: 'rtl' }} >
+      <AppBar position="static">
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+        >
+        </Typography>
+        <Search sx={{ padding: '1%' }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              getSearchResult(searchValue)
+            }
+          }}>
+          <WrapperedSearchIcon onClick={handleSearchClick} />
+          <StyledInputBase
+            placeholder="חיפוש..."
+            inputProps={{ 'aria-label': 'search' }}
+            value={searchValue}
+            onChange={handleValue}
+          />
+          <Stack sx={{marginLeft:'1%'}}>
+          {searchValue && <ClearIcon onClick={handleClearClick} />}
+          </Stack>
+          <FormatAlignCenterIcon />
           </Search>
-        </AppBar>
+      </AppBar>
     </Box>
   );
 }
