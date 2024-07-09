@@ -2,15 +2,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
-import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
-import AdvancedSearch from './AdvancedSearch'
+import AdvancedSearch from './AdvancedSearch';
+import CategoriesScreen from './CategoriesScreen';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,21 +49,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 async function getSearchResult(keySearch) {
   try {
-    const response = await axios.get('https://localhost:7118/api/Item/' + keySearch);
+    const response = await axios.get('https://localhost:7118/api/Item/ReadByString/' + keySearch);
     if (response.status === 200) {
       localStorage.setItem('SearchResult', JSON.stringify(response.data));
-      // console.log("the response of search" + JSON.stringify(response.data));
       return response.data;
     } else {
       throw new Error('error');
     }
   } catch (error) {
-    console.error('problem', error);
-    return 0;
+    console.error('error', error);
+    return null; // Handle error case
   }
 }
 
 export default function SearchAppBar() {
+  // const [showCategories, setShowCategories] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
@@ -71,8 +71,9 @@ export default function SearchAppBar() {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    getSearchResult(searchValue);
+  const handleSearchClick = async () => {
+    const searchResult = await getSearchResult(searchValue);
+    // setShowCategories(searchResult.length < 1); 
   };
 
   const handleClearClick = () => {
@@ -86,11 +87,10 @@ export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1, direction: 'rtl' }} >
       <AppBar position="static">
-        {/* Your existing code */}
         <Search sx={{ padding: '1%' }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              getSearchResult(searchValue)
+              handleSearchClick(); // Call handleSearchClick on Enter
             }
           }}>
           <WrapperedSearchIcon onClick={handleSearchClick} />
@@ -106,9 +106,11 @@ export default function SearchAppBar() {
           <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
         </Search>
       </AppBar>
+      {/* <Stack >
+        {showCategories && <CategoriesScreen />}
+      </Stack> */}
       <Stack>
         {showAdvancedSearch && <AdvancedSearch />}
       </Stack>
     </Box>
-  );
-}
+  )}
