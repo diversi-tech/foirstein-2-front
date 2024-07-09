@@ -44,20 +44,15 @@ const NoteComponent = (props) => {
           inputProps={{ maxLength: 255 }}
         />
         <Button
-          variant="contained"
-          color="primary"
+          size="small"
+          variant="outlined"
           onClick={saveNote}
-          sx={{
+          sx={{ 
             marginRight: '8px',
-            marginTop: '7px',
-            height: '55px',
+            marginTop: '10px',
+            height: '56px',
             lineHeight: 1,
-            color: '#0D47A1',
-            backgroundColor: '#fff',
-            '&:hover': {
-              backgroundColor: 'inherit',
-            }
-          }}
+           }}
         >
           שמור הערה
         </Button>
