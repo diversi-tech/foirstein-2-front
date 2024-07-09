@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
-//import { useNavigate } from 'react';
+import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
 
 const Item = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
- //   const navigate = useNavigate();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const handleBorrowClick = () => {
-   //     navigate('/borrow', { state: { item } });
     };
 
     return (
@@ -19,7 +17,6 @@ const Item = ({ item }) => {
             <Box 
                 sx={{
                     width: '70%',
-                    maxWidth: 600,
                     margin: '0 auto',
                     boxShadow: 3,
                     borderRadius: 2,
@@ -57,8 +54,8 @@ const Item = ({ item }) => {
                     </Button>
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <Box sx={{ marginTop: 2 }}>
-                        <Typography paragraph>{item.description}</Typography>
+                    <Box sx={{ marginTop: 2}}>
+                        {expanded && <ItemDetailScreenComponent currentItem={item}/>}
                     </Box>
                 </Collapse>
             </Box>

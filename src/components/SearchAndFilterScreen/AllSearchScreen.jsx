@@ -14,7 +14,7 @@ function AllSearchScreen() {
     } else {
       console.log('No value found in localStorage for key SearchResult');
     };
-  }, [items]); // Empty dependency array for running the effect only once on mount
+  }, [items]); 
 
   return (
     <>

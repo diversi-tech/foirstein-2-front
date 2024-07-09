@@ -5,7 +5,7 @@ import { Divider, List, ListItemText, ListItem } from '@mui/material';
 export default function ItemDetailsDisplay(props) {
 
   const itemProperties = {
-    itemId: 'מספר פריט',
+    id: 'מספר פריט',
     title: 'כותרת',
     author: 'מחבר',
     description: 'תיאור',
@@ -20,7 +20,7 @@ export default function ItemDetailsDisplay(props) {
   const style = {
     p: 0,
     width: '100%',
-    maxWidth: '80%',
+    maxWidth: '70%',
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',

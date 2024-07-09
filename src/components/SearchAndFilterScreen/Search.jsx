@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
+import AdvancedSearch from './AdvancedSearch'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,34 +64,29 @@ async function getSearchResult(keySearch) {
 }
 
 export default function SearchAppBar() {
-
   const [searchValue, setSearchValue] = useState('');
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
   const handleValue = (e) => {
-    setSearchValue(e.target.value)
-  }
+    setSearchValue(e.target.value);
+  };
 
   const handleSearchClick = () => {
     getSearchResult(searchValue);
-  }
+  };
 
   const handleClearClick = () => {
     setSearchValue('');
-  }
+  };
 
-  useEffect(() => {
-  }, [searchValue]);
+  const handleAdvancedSearchClick = () => {
+    setShowAdvancedSearch(!showAdvancedSearch);
+  };
 
   return (
     <Box sx={{ flexGrow: 1, direction: 'rtl' }} >
       <AppBar position="static">
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-        </Typography>
+        {/* Your existing code */}
         <Search sx={{ padding: '1%' }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -104,12 +100,15 @@ export default function SearchAppBar() {
             value={searchValue}
             onChange={handleValue}
           />
-          <Stack sx={{marginLeft:'1%'}}>
-          {searchValue && <ClearIcon onClick={handleClearClick} />}
+          <Stack sx={{ marginLeft: '1%' }}>
+            {searchValue && <ClearIcon onClick={handleClearClick} />}
           </Stack>
-          <FormatAlignCenterIcon />
-          </Search>
+          <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
+        </Search>
       </AppBar>
+      <Stack>
+        {showAdvancedSearch && <AdvancedSearch />}
+      </Stack>
     </Box>
   );
 }
