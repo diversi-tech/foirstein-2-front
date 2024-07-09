@@ -4,8 +4,20 @@ import { Divider, List, ListItemText, ListItem } from '@mui/material';
 
 export default function ItemDetailsDisplay(props) {
 
+  const formatDateFromISO = function (dateString) {
+    const dateObj = new Date(currentItem.createdAt)
+    const year = dateObj.getFullYear()
+    const month = ("0" + (dateObj.getMonth() + 1)).slice(-2)
+    const day = ("0" + dateObj.getDate()).slice(-2)
+    return `${year}-${month}-${day}`
+  }
+
+  let currentItem = props.currentItem;
+  currentItem.createdAt = formatDateFromISO(currentItem.createdAt)
+  currentItem.updatedAt = formatDateFromISO(currentItem.updatedAt)
+
   const itemProperties = {
-    itemId: 'מספר פריט',
+    id: 'מספר פריט',
     title: 'כותרת',
     author: 'מחבר',
     description: 'תיאור',
@@ -14,13 +26,13 @@ export default function ItemDetailsDisplay(props) {
     isApproved: 'זמין להשאלה',
     createdAt: 'תאריך יצירה',
     updatedAt: 'עדכון אחרון',
-    price: 'מחיר'
+    // price: 'מחיר'
   };
 
   const style = {
     p: 0,
     width: '100%',
-    maxWidth: '80%',
+    maxWidth: '70%',
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
@@ -32,7 +44,7 @@ export default function ItemDetailsDisplay(props) {
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <List id="itemPropertiesList" sx={style} aria-label="mailbox folders">
-        {Object.entries(props.currentItem).map(([key, value], index) => {
+        {Object.entries(currentItem).map(([key, value], index) => {
           const labelId = `checkbox-list-label-${index}`;
           const propertyLabel = itemProperties[key];
           if (key === 'title') return null;
@@ -41,7 +53,7 @@ export default function ItemDetailsDisplay(props) {
               <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px' }}>
                 <ListItemText
                   id={labelId}
-                  sx={{ textAlign: 'right', height: '40px', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
+                  sx={{ textAlign: 'right', height: 'auto', overflow: 'auto', textOverflow: 'ellipsis', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
                 >
                   {key === 'isApproved' ? (
                     <>
