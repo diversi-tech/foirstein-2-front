@@ -9,7 +9,7 @@ const AdvancedSearch = () => {
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
+  const [createdAt, setCreatedAt] = useState("0001-01-01");
 
   let item = {}
 
