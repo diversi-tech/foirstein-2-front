@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
-// import { useNavigate } from 'react';
+import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
 
 const Item = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
-    // const navigate = useNavigate();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     const handleBorrowClick = () => {
-        // navigate('/borrow', { state: { item } });
     };
 
     return (
         <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center', marginTop: 1, direction: 'rtl' }}>
-            <Box
+            <Box 
                 sx={{
                     width: '70%',
-                    maxWidth: 600,
                     margin: '0 auto',
                     boxShadow: 3,
                     borderRadius: 2,
@@ -45,7 +42,7 @@ const Item = ({ item }) => {
                         onClick={handleExpandClick}
                         sx={{ marginLeft: 1 }}
                     >
-                        {expanded ? 'פחות מידע' : 'מידע נוסף'}
+                        {expanded ? 'פחות מידע' :'מידע נוסף' }
                     </Button>
                     <Button
                         size="small"
@@ -57,8 +54,8 @@ const Item = ({ item }) => {
                     </Button>
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <Box sx={{ marginTop: 2 }}>
-                        <Typography paragraph>{item.description}</Typography>
+                    <Box sx={{ marginTop: 2}}>
+                        {expanded && <ItemDetailScreenComponent currentItem={item}/>}
                     </Box>
                 </Collapse>
             </Box>
@@ -66,4 +63,4 @@ const Item = ({ item }) => {
     );
 };
 
-export default Item;ז
+export default Item;
