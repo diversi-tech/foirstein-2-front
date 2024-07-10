@@ -31,7 +31,6 @@ const currentUserId = currentUser ? currentUser.UserId : 0;
 
     return (
         <>
-            {currentDate.toString}
             <Button onClick={() => setOpen(true)} variant="contained" color="primary" sx={{ width: '100%' }}>להשאלה</Button>
             <div className='dialog' dir='rtl' style={{ marginRight: 450, color: '#B71C1C', direction: 'rtl', unicodeBidi: 'embed', textAlign: 'right', writingMode: 'horizontal-tb', font: 'Calibri Light' }}>
                 <Dialog open={open} onClose={() => setOpen(false)} aria-describedby='alert-dialog-slide-description'>
@@ -49,13 +48,11 @@ const currentUserId = currentUser ? currentUser.UserId : 0;
                                 <div>{currentItem.TotalPrice}</div>
                             </>
                         )}
-                        {console.log(borrowRequest,"borrowRequest")}
                         <CustomDateRangePicker borrowRequest={borrowRequest} setBorrowRequest={setBorrowRequest} righatDate={righatDate} setRighatDate={setRighatDate}></CustomDateRangePicker>
                         <br /><br />
                         <div className='submit' style={{ marginLeft: 5 }}>
                             <ButtonGroup>
                             {righatDate&&<Button  style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => { setOpen(false); AddBorrowRequest(borrowRequest); }}>אישור</Button>}
-                            {/* <Button disabled="righatDate" style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => { setOpen(false); AddBorrowRequest(borrowRequest); }}>אישור</Button> */}
                             </ButtonGroup>
                         </div>
                     </div>
