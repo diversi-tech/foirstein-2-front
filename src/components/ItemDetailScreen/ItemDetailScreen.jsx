@@ -15,7 +15,7 @@ const ItemDetailScreenComponent = (props) => {
 
   const itemId = currentItem.id;
 
-  const userId = useSelector(state => state.userReducer.currentUser).UserId;
+  const userId = useSelector(state => state.userReducer.currentUser).userId;
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
 
@@ -66,7 +66,6 @@ const ItemDetailScreenComponent = (props) => {
 
   return (
     <div dir='ltr'>
-      <Typography variant="h3" color='#0D47A1' sx={{ textAlign: 'center', paddingBottom: '24px', marginTop: '5%' }}>{currentItem.title}</Typography>
       <Grid container justifyContent="center" sx={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center' }}>
         <Grid item xs={12} md={6} style={{ textAlign: 'right' }}>
           <ItemDetailsDisplay currentItem={currentItem} />
