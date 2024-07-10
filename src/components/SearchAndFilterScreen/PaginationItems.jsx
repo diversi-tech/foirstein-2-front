@@ -19,7 +19,7 @@ const PaginatedItemsPage = ({ items, itemsPerPage = 8 }) => {
 
   return (
     <Stack spacing={2} sx={{ width: '100%'}}>
-      <Stack sx={{alignItems:'center'}}>
+      <Stack sx={{ alignItems: 'center'}}>
         {pageCount < 2 ? null : (
           <Pagination sx={{marginTop:'2%'}}
             count={pageCount}

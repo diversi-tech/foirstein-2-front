@@ -1,20 +1,51 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Box, Typography } from '@mui/material';
+import axios from 'axios';
+
 
 const AdvancedSearch = () => {
   // State variables to manage form inputs
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [createdAt, setCreatedAt] = useState('');
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
+  let item = {}
 
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform search logic here
+    item = {
+      "id": 0,
+      "title": title,
+      "author": author,
+      "description": description,
+      "category": category,
+      "filePath": "",
+      "isApproved": false,
+      "createdAt": createdAt,
+      "updatedAt": "0001-01-01T00:00:00"
+    }
     console.log('Form submitted:', { title, author, description, category, createdAt });
+    getAdvancedSearchResult()
   };
+
+
+async function getAdvancedSearchResult() {
+  try {
+    const response = await axios.post('https://localhost:7118/api/Item/ReadByAttributes',item );
+    if (response.status === 200) {
+      localStorage.setItem('SearchResult', JSON.stringify(response.data));
+      return response.data;
+    } else {
+      throw new Error('error');
+    }
+  } catch (error) {
+    console.error('error', error);
+    return null; // Handle error case
+  }
+}
 
   return (
     <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2}>
