@@ -15,7 +15,7 @@ const ItemDetailScreenComponent = (props) => {
 
   const itemId = currentItem.id;
 
-  const userId = useSelector(state => state.userReducer.currentUser).UserId;
+  const userId = useSelector(state => state.userReducer.currentUser).userId;
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
 
