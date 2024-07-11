@@ -10,7 +10,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
 import AdvancedSearch from './AdvancedSearch';
-import CategoriesScreen from './CategoriesScreen';
+// import CategoriesScreen from './CategoriesScreen';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
