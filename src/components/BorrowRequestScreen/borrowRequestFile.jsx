@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, Input, TextField, Icon } from '@mui/material';
+import { Button, Dialog, ButtonGroup } from '@mui/material';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { AddBorrowRequest } from "../../utils/borrowRequestService"
 import CustomDateRangePicker from "./calendar"
 
 export default function BorrowRequestFile({ currentItem }) {
 const currentUser = useSelector(state => state.userReducer.currentUser);
-const currentUserId = currentUser ? currentUser.UserId : 0;
+const currentUserId = currentUser ? currentUser.userId : 0;
 ;
     const [open, setOpen] = useState(false);
     const currentDate = new Date();
@@ -27,6 +26,8 @@ const currentUserId = currentUser ? currentUser.UserId : 0;
         TotalPrice: 0,
         requestStatus:0
     });
+
+    console.log(currentItem);
    
 
     return (
@@ -42,7 +43,7 @@ const currentUserId = currentUser ? currentUser.UserId : 0;
                         {currentItem && (
                             <>
                                 <div>הספר המבוקש:</div>
-                                <div>{currentItem.name}</div>
+                                <div>{currentItem.title}</div>
                                 <br /><br />
                                 <div>מחיר:</div>
                                 <div>{currentItem.TotalPrice}</div>
