@@ -25,10 +25,7 @@ const currentUserId = currentUser ? currentUser.userId : 0;
         untilDate: untilDate.toISOString(),
         TotalPrice: 0,
         requestStatus:0
-    });
-
-    console.log(currentItem);
-   
+    });   
 
     return (
         <>
