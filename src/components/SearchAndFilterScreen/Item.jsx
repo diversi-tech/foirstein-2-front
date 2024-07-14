@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
-import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
+import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen'
+import axios from 'axios';
 
 const Item = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
@@ -9,8 +10,20 @@ const Item = ({ item }) => {
         setExpanded(!expanded);
     };
 
-    const handleBorrowClick = () => {
-    };
+    async function onSelected(search) {
+        try{
+          const response = await axios.get('https://localhost:7118/api/Item/ReadByCategory/' + search);
+          if (response.status === 200) {
+            localStorage.setItem('SearchResult', JSON.stringify(response.data));
+            return response.data;
+          } else {
+            throw new Error('error');
+          }
+        } catch (error) {
+          console.error('error', error);
+          return null; // Handle error case
+        }
+    }
 
     return (
         <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center', marginTop: 1, direction: 'rtl' }}>
@@ -44,18 +57,18 @@ const Item = ({ item }) => {
                     >
                         {expanded ? 'פחות מידע' :'מידע נוסף' }
                     </Button>
-                    <Button
+                    {/* <Button
                         size="small"
                         variant="contained"
                         color="primary"
                         onClick={handleBorrowClick}
                     >
                         השאלה
-                    </Button>
+                    </Button> */}
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Box sx={{ marginTop: 2}}>
-                        {expanded && <ItemDetailScreenComponent currentItem={item}/>}
+                        {expanded && <ItemDetailScreenComponent currentItem={item} onSelected= {onSelected}/>}
                     </Box>
                 </Collapse>
             </Box>
