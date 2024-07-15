@@ -5,7 +5,7 @@ import AllSearchScreen from './components/SearchAndFilterScreen/AllSearchScreen'
 function App() {
   return (
     <>
-    <AllSearchScreen/>
+    <AllSearchScreen></AllSearchScreen>
     </>
   );
 }
