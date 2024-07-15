@@ -47,14 +47,14 @@ export default function SearchSimilarItems(props) {
           onChange={handleChange}
           inputProps={{ 'aria-label': 'Select category or tag' }}
         >
-          <ListSubheader sx={{ color: 'black', fontStyle: 'italic', textAlign: 'left' }}>קטגוריה</ListSubheader>
+          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', textAlign: 'left' }}>קטגוריה</ListSubheader>
           <MenuItem dir="rtl" value={props.category}>{props.category}</MenuItem>
-          <ListSubheader sx={{ color: 'black', fontStyle: 'italic', textAlign: 'left' }}>
+          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', textAlign: 'left' }}>
             {Object.keys(tags).length > 0 ? 'תגיות' : 'אין תגיות קשורות'}
           </ListSubheader>
           {Object.keys(tags).length > 0 && (
             Object.keys(tags).map((tagId) => (
-              <MenuItem dir="rtl" key={tagId} value={tagId}>{tags[tagId].name}</MenuItem>
+              <MenuItem dir="rtl" key={tagId} value={tags[tagId].id}>{tags[tagId].name}</MenuItem>
             ))
           )}
         </Select>
