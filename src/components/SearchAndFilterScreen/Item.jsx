@@ -9,19 +9,24 @@ const Item = ({ item }) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
     async function onSelected(search) {
-        try{
-          const response = await axios.get('https://localhost:7118/api/Item/ReadByCategory/' + search);
-          if (response.status === 200) {
-            localStorage.setItem('SearchResult', JSON.stringify(response.data));
-            return response.data;
-          } else {
-            throw new Error('error');
-          }
+        try {
+            let response = null;
+            if (isNaN(search)) {
+                response = await axios.get('https://localhost:7118/api/Item/ReadByCategory/' + search);
+            } else {
+                console.log(search);
+                response = await axios.get('https://localhost:7118/api/Item/ReadByTag/' + search);
+            }
+            if (response.status === 200) {
+                localStorage.setItem('SearchResult', JSON.stringify(response.data));
+                return response.data;
+            } else {
+                throw new Error('Error retrieving data');
+            }
         } catch (error) {
-          console.error('error', error);
-          return null; // Handle error case
+            console.error('Error:', error);
+            return null;
         }
     }
 
