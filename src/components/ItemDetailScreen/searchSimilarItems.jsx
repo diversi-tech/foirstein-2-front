@@ -5,7 +5,7 @@ import axios from 'axios';
 
 async function getTags(itemId) {
   try {
-    const response = await axios.get('https://localhost:7118/api/Tag/GetAllTagsByItemId?itemId=' + itemId);
+    const response = await axios.get(process.env.REACT_APP_SERVER_URL+'/api/Tag/GetAllTagsByItemId?itemId=' + itemId);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -47,9 +47,9 @@ export default function SearchSimilarItems(props) {
           onChange={handleChange}
           inputProps={{ 'aria-label': 'Select category or tag' }}
         >
-          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', fontStyle: 'italic', textAlign: 'left' }}>קטגוריה</ListSubheader>
+          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', textAlign: 'left' }}>קטגוריה</ListSubheader>
           <MenuItem dir="rtl" value={props.category}>{props.category}</MenuItem>
-          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', fontStyle: 'italic', textAlign: 'left' }}>
+          <ListSubheader sx={{ color: '#1e3e8b',fontWeight:'bold', fontSize:'18px', textAlign: 'left' }}>
             {Object.keys(tags).length > 0 ? 'תגיות' : 'אין תגיות קשורות'}
           </ListSubheader>
           {Object.keys(tags).length > 0 && (

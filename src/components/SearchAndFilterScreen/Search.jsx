@@ -1,10 +1,16 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import { alpha, styled } from '@mui/material/styles';
+import axios from 'axios';
+import * as React from 'react';
+import { useState } from 'react';
+import ClearIcon from '@mui/icons-material/Clear';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import { Stack } from '@mui/material';
+import AdvancedSearch from './AdvancedSearch';
+// import CategoriesScreen from './CategoriesScreen';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -21,15 +27,13 @@ const Search = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+const WrapperedSearchIcon = styled(SearchIcon)(({ theme }) => ({
+  padding: theme.spacing(0, 1),
   height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  left: 0, // Position the icon on the left
+  cursor: 'pointer',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -43,27 +47,70 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+async function getSearchResult(keySearch) {
+  try {
+    const response = await axios.get('https://localhost:7118/api/Item/ReadByString/' + keySearch);
+    if (response.status === 200) {
+      localStorage.setItem('SearchResult', JSON.stringify(response.data));
+      return response.data;
+    } else {
+      throw new Error('error');
+    }
+  } catch (error) {
+    console.error('error', error);
+    return null; // Handle error case
+  }
+}
+
 export default function SearchAppBar() {
+  // const [showCategories, setShowCategories] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+
+  const handleValue = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchClick = async () => {
+    const searchResult = await getSearchResult(searchValue);
+    // setShowCategories(searchResult.length < 1); 
+  };
+
+  const handleClearClick = () => {
+    setSearchValue('');
+  };
+
+  const handleAdvancedSearchClick = () => {
+    setShowAdvancedSearch(!showAdvancedSearch);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, direction: 'rtl' }} >
       <AppBar position="static">
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-        </Typography>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
+        <Search sx={{ padding: '1%' }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearchClick(); // Call handleSearchClick on Enter
+            }
+          }}>
+          <WrapperedSearchIcon onClick={handleSearchClick} />
           <StyledInputBase
             placeholder="חיפוש..."
             inputProps={{ 'aria-label': 'search' }}
+            value={searchValue}
+            onChange={handleValue}
           />
+          <Stack sx={{ marginLeft: '1%' }}>
+            {searchValue && <ClearIcon onClick={handleClearClick} />}
+          </Stack>
+          <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
         </Search>
       </AppBar>
+      {/* <Stack >
+        {showCategories && <CategoriesScreen />}
+      </Stack> */}
+      <Stack>
+        {showAdvancedSearch && <AdvancedSearch />}
+      </Stack>
     </Box>
-  );
-}
+  )}

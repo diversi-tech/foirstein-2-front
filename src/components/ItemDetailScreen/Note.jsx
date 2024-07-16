@@ -1,55 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
 
-const NoteComponent = () => {
-  const [noteText, setNoteText] = useState('');
+const NoteComponent = (props) => {
+  const { noteText, setNoteText, updateRatingNote } = props;
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
 
-  const fetchInitialNote = async () => {
+  const saveNote = async () => {
     try {
-      const response = await axios.get('<URL>');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching prev note:', error);
-      return null;
+      await updateRatingNote("note", noteText);
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
     }
-  };
-
-  useEffect(() => {
-    fetchInitialNote().then(data => {
-      setNoteText(data || '');
-    });
-  }, []);
-
-  useEffect(() => {
-    let timer;
-    if (successOpen) {
-      timer = setTimeout(() => {
-        setSuccessOpen(false);
-      }, 30000);
+    catch (error) {
+      console.error('Error saving note:', error);
     }
-    return () => clearTimeout(timer);
-  }, [successOpen]);
-
-  const saveNote = () => {
-    axios.post('<URL>', noteText, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        console.log('Note saved:', response.data);
-        setShowSuccessMessage(true);
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-        }, 3000);
-      })
-      .catch(error => {
-        console.error('Error saving note:', error);
-      });
   };
 
   return (
@@ -77,31 +44,23 @@ const NoteComponent = () => {
           inputProps={{ maxLength: 255 }}
         />
         <Button
-          variant="contained"
-          color="primary"
+          size="small"
+          variant="outlined"
           onClick={saveNote}
-          sx={{
+          sx={{ 
             marginRight: '8px',
-            marginTop: '7px',
-            height: '55px',
+            marginTop: '10px',
+            height: '56px',
             lineHeight: 1,
-            color: '#0D47A1',
-            backgroundColor: '#fff',
-            '&:hover': {
-              backgroundColor: 'inherit',
-            }
-          }}
+           }}
         >
           שמור הערה
         </Button>
       </div>
       {showSuccessMessage && (
         <div style={{
-          position: 'fixed',
-          marginTop: '-7px',
-          direction: 'ltr',
-          marginLeft: '30vw',
-          zIndex: 9999,
+          direction: 'rtl',
+          width: '97%',
         }}>
           <span style={{
             fontFamily: [
@@ -111,9 +70,10 @@ const NoteComponent = () => {
               'sans-serif',
             ].join(','),
             color: '#0D47A1',
-          }}>!ההערה נשמרה בהצלחה</span>
+          }}>ההערה נשמרה בהצלחה!</span>
         </div>
-      )}
+      )
+        || (<div style={{ height: '22px' }}></div>)}
     </div>
   );
 };
