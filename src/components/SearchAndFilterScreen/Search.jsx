@@ -10,7 +10,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
 import AdvancedSearch from './AdvancedSearch';
-// import CategoriesScreen from './CategoriesScreen';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,12 +57,11 @@ async function getSearchResult(keySearch) {
     }
   } catch (error) {
     console.error('error', error);
-    return null; // Handle error case
+    return null; 
   }
 }
 
 export default function SearchAppBar() {
-  // const [showCategories, setShowCategories] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
@@ -73,7 +71,6 @@ export default function SearchAppBar() {
 
   const handleSearchClick = async () => {
     const searchResult = await getSearchResult(searchValue);
-    // setShowCategories(searchResult.length < 1); 
   };
 
   const handleClearClick = () => {
