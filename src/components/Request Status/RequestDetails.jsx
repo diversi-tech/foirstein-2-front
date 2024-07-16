@@ -52,10 +52,10 @@ const RequestDetails = ({ request, expanded }) => {
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
         <TableRow>
-          <TableCell colSpan={9}>
+          <TableCell colSpan={8} style={{ padding: 0 }}>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <Card>
-                <Box display="flex" flexDirection="column">
+              <Card style={{ width: '100%' }}>
+                <Box display="flex" flexDirection="column" width="100%">
                   <CardContent>
                     <Typography variant="h5" gutterBottom>
                       {request.title}
@@ -96,6 +96,3 @@ const RequestDetails = ({ request, expanded }) => {
 };
 
 export default RequestDetails;
-
-
-
