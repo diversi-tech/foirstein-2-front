@@ -5,7 +5,7 @@ import axios from 'axios';
 
 async function getTags(itemId) {
   try {
-    const response = await axios.get('https://localhost:7118/api/Tag/GetAllTagsByItemId?itemId=' + itemId);
+    const response = await axios.get(process.env.REACT_APP_SERVER_URL+'/api/Tag/GetAllTagsByItemId?itemId=' + itemId);
     if (response.status === 200) {
       return response.data;
     } else {
