@@ -1,51 +1,10 @@
-import SearchIcon from '@mui/icons-material/Search';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
-import { alpha, styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
 import { useState } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import { Stack } from '@mui/material';
+import { Stack, Grid, Button, TextField, Paper, Typography } from '@mui/material';
 import AdvancedSearch from './AdvancedSearch';
-// import CategoriesScreen from './CategoriesScreen';
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginBottom: '1%',
-  width: '40%',
-  display: 'flex',
-  alignItems: 'center',
-}));
-
-const WrapperedSearchIcon = styled(SearchIcon)(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`, // Add padding to the left for the icon
-    transition: theme.transitions.create('width'),
-    fontSize: '1.2rem', // Adjust font size as needed
-  },
-}));
 
 async function getSearchResult(keySearch) {
   try {
@@ -63,7 +22,6 @@ async function getSearchResult(keySearch) {
 }
 
 export default function SearchAppBar() {
-  // const [showCategories, setShowCategories] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
@@ -72,8 +30,7 @@ export default function SearchAppBar() {
   };
 
   const handleSearchClick = async () => {
-    const searchResult = await getSearchResult(searchValue);
-    // setShowCategories(searchResult.length < 1); 
+    await getSearchResult(searchValue);
   };
 
   const handleClearClick = () => {
@@ -85,32 +42,101 @@ export default function SearchAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, direction: 'rtl' }} >
-      <AppBar position="static">
-        <Search sx={{ padding: '1%' }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSearchClick(); // Call handleSearchClick on Enter
-            }
-          }}>
-          <WrapperedSearchIcon onClick={handleSearchClick} />
-          <StyledInputBase
-            placeholder="חיפוש..."
-            inputProps={{ 'aria-label': 'search' }}
-            value={searchValue}
-            onChange={handleValue}
-          />
-          <Stack sx={{ marginLeft: '1%' }}>
-            {searchValue && <ClearIcon onClick={handleClearClick} />}
+    // <Grid item xs={12}>
+    //   <Box
+    //     sx={{
+    //       display: 'flex',
+    //       justifyContent: 'center',
+    //       alignItems: 'center',
+    //       backgroundImage: 'url(../../assets/pic/books.png)',
+    //       backgroundSize: 'cover',
+    //       backgroundPosition: 'center',
+    //       height: '300px',
+    //       width: '500px',
+    //     }}
+    //   >
+    //     <Paper elevation={3} sx={{ padding: 2, maxWidth: 600, width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+    //       <Typography variant="h6" gutterBottom align="right">
+    //         חיפוש
+    //       </Typography>
+    //       <TextField
+    //         sx={{ display: 'flex' }}
+    //         variant="outlined"
+    //         fullWidth
+    //         placeholder="הקלידו מילה..."
+    //         margin="normal"
+    //         value={searchValue}
+    //         onChange={handleValue}
+    //         onKeyDown={(e) => {
+    //           if (e.key === 'Enter') {
+    //             handleSearchClick();
+    //           }
+    //         }}
+    //       >
+    //         <Stack sx={{ marginLeft: '1%' }}>
+    //           {searchValue && <ClearIcon onClick={handleClearClick} />}
+    //         </Stack>
+    //       </TextField>
+    //       <Button onClick={handleSearchClick} fullWidth variant="contained" color="primary" sx={{ marginTop: 2 }}>
+    //         חיפוש
+    //       </Button>
+    //       <Button onClick={handleAdvancedSearchClick} fullWidth variant="text" color="primary" sx={{ marginTop: 2 }}>
+    //         חיפוש מתקדם
+    //       </Button>
+    //     </Paper>
+    //   </Box>
+    //   <Stack>
+    //     {showAdvancedSearch && <AdvancedSearch />}
+    //   </Stack>
+    // </Grid>
+    <Grid container spacing={4} alignItems="center">
+      <Grid item xs={12}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundImage: 'url(../../../assets/pic/books.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '400px',
+            width: '100%',
+            padding: 4,
+          }}
+        >
+          <Paper elevation={3} sx={{ padding: 2, maxWidth: 600, width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+            <Typography variant="h6" gutterBottom align="right">
+              HUfind
+            </Typography>
+            <TextField
+              variant="outlined"
+              fullWidth
+              placeholder="הקלידו מילה..."
+              margin="normal"
+              value={searchValue}
+              onChange={handleValue}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchClick();
+                }
+              }}
+            >
+              <Stack sx={{ marginLeft: '1%' }}>
+                {searchValue && <ClearIcon onClick={handleClearClick} />}
+              </Stack>
+            </TextField>
+            <Button onClick={handleSearchClick} fullWidth variant="contained" color="primary" sx={{ marginTop: 2 }}>
+              חיפוש
+            </Button>
+            <Button onClick={handleAdvancedSearchClick} fullWidth variant="text" color="primary" sx={{ marginTop: 2 }}>
+              חיפוש מתקדם
+            </Button>
+          </Paper>
+          <Stack>
+            {showAdvancedSearch && <AdvancedSearch />}
           </Stack>
-          <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
-        </Search>
-      </AppBar>
-      {/* <Stack >
-        {showCategories && <CategoriesScreen />}
-      </Stack> */}
-      <Stack>
-        {showAdvancedSearch && <AdvancedSearch />}
-      </Stack>
-    </Box>
-  )}
+        </Box>
+      </Grid>
+    </Grid>
+  )
+}
