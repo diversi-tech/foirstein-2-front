@@ -72,7 +72,7 @@ const theme = createTheme({
       main: '#0D1E46', // כחול עמוק
     },
     secondary: {
-      main: '#B71C1C', // אדום נוטה לבורדו
+      main: '#5A6F7D', // אדום נוטה לבורדו
     },
     text: {
       primary: '#000000', // שחור

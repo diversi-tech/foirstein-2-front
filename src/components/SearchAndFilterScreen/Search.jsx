@@ -14,9 +14,6 @@ const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.7),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
   marginLeft: 'auto',
   marginRight: 'auto',
   marginBottom: '1%',
@@ -39,15 +36,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`, 
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
-    fontSize: '1.2rem', 
+    fontSize: '1.2rem',
   },
 }));
 
 async function getSearchResult(keySearch) {
   try {
-    const response = await axios.get('https://localhost:7118/api/Item/ReadByString/' + keySearch);
+    const response = await axios.get(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByString/' + keySearch);
     if (response.status === 200) {
       localStorage.setItem('SearchResult', JSON.stringify(response.data));
       return response.data;
@@ -56,7 +53,7 @@ async function getSearchResult(keySearch) {
     }
   } catch (error) {
     console.error('error', error);
-    return null; 
+    return null;
   }
 }
 
@@ -83,14 +80,12 @@ export default function SearchAppBar() {
   return (
     <Box sx={{
       flexGrow: 1, direction: 'rtl',
-      padding:'5%',
+      padding: '5%',
       justifyContent: 'center',
       alignItems: 'center',
       backgroundImage: 'url(https://foirstein-1-front-aojx.onrender.com/assets/pic/books.png)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      // height: '300px',
-      // width: '100%'
     }} >
         <Search sx={{ padding: '1%' }}
           onKeyDown={(e) => {
@@ -110,7 +105,25 @@ export default function SearchAppBar() {
           </Stack>
           <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
         </Search>
-      <Stack sx={{position:'absolute', zIndex:'1', width:'60%',marginRight:'15%'}}>
+      <Search sx={{ padding: '1%' }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchClick();
+          }
+        }}>
+        <WrapperedSearchIcon onClick={handleSearchClick} />
+        <StyledInputBase
+          placeholder="חיפוש..."
+          inputProps={{ 'aria-label': 'search' }}
+          value={searchValue}
+          onChange={handleValue}
+        />
+        <Stack sx={{ marginLeft: '1%' }}>
+          {searchValue && <ClearIcon onClick={handleClearClick} />}
+        </Stack>
+        <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
+      </Search>
+      <Stack sx={{ position: 'absolute', zIndex: '1', width: '60%', marginRight: '15%' }}>
         {showAdvancedSearch && <AdvancedSearch />}
       </Stack>
     </Box>
