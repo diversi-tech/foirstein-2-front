@@ -48,7 +48,7 @@ async function getAdvancedSearchResult() {
 }
 
   return (
-    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2} sx={{backgroundColor:'white'}}>
+    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2} sx={{backgroundColor:'white'}} >
       <Typography variant="h6" gutterBottom>
         חיפוש מתקדם
       </Typography>
