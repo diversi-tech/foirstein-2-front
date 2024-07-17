@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import { AddBorrowRequest } from "../../utils/borrowRequestService"
 import CustomDateRangePicker from "./calendar"
 
-export default function BorrowRequestFile({ currentItem }) {
-const currentUser = useSelector(state => state.userReducer.currentUser);
-const currentUserId = currentUser ? currentUser.userId : 0;
-;
+export default function BorrowRequestFile({ currentItem, isApproved }) {
+    const currentUser = useSelector(state => state.userReducer.currentUser);
+    const currentUserId = currentUser ? currentUser.userId : 0;
+
     const [open, setOpen] = useState(false);
     const currentDate = new Date();
     currentDate.toISOString();
@@ -24,12 +24,14 @@ const currentUserId = currentUser ? currentUser.userId : 0;
         fromDate: fromDate.toISOString(),
         untilDate: untilDate.toISOString(),
         TotalPrice: 0,
-        requestStatus:0
-    });   
+        requestStatus: 0
+    });
 
     return (
         <>
-            <Button onClick={() => setOpen(true)} variant="contained" color="primary" sx={{ width: '100%' }}>להשאלה</Button>
+            <Button onClick={() => setOpen(true)} variant="contained" sx={{ width: '100%' }}
+                color={isApproved == true ? "primary" : "secondary"}
+            >להשאלה</Button>
             <div className='dialog' dir='rtl' style={{ marginRight: 450, color: '#B71C1C', direction: 'rtl', unicodeBidi: 'embed', textAlign: 'right', writingMode: 'horizontal-tb', font: 'Calibri Light' }}>
                 <Dialog open={open} onClose={() => setOpen(false)} aria-describedby='alert-dialog-slide-description'>
                     <span onClick={() => setOpen(false)} style={{ marginLeft: '10px', marginTop: '4px', width: '30px' }}><ClearOutlinedIcon /></span>
@@ -50,7 +52,7 @@ const currentUserId = currentUser ? currentUser.userId : 0;
                         <br /><br />
                         <div className='submit' style={{ marginLeft: 5 }}>
                             <ButtonGroup>
-                            {righatDate&&<Button  style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => { setOpen(false); AddBorrowRequest(borrowRequest); }}>אישור</Button>}
+                                {righatDate && <Button style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => { setOpen(false); AddBorrowRequest(borrowRequest); }}>אישור</Button>}
                             </ButtonGroup>
                         </div>
                     </div>

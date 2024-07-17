@@ -3,6 +3,7 @@ import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
 import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen'
 import axios from 'axios';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
+import { dark } from '@mui/material/styles/createPalette';
 
 const Item = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
@@ -24,10 +25,10 @@ const Item = ({ item }) => {
         try {
             let response = null;
             if (isNaN(search)) {
-                response = await axios.get('https://localhost:7118/api/Item/ReadByCategory/' + search);
+                response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByCategory/' + search);
             } else {
                 console.log(search);
-                response = await axios.get('https://localhost:7118/api/Item/ReadByTag/' + search);
+                response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByTag/' + search);
             }
             if (response.status === 200) {
                 localStorage.setItem('SearchResult', JSON.stringify(response.data));
@@ -76,9 +77,15 @@ const Item = ({ item }) => {
                     >
                         {expanded ? 'פחות מידע' : 'מידע נוסף'}
                     </Button>
-                    <Box width="120PX">
-                        <BorrowRequestFile currentItem={item} />
-                    </Box>
+                    {item.isApproved ? (
+                        <Box width="120PX" sx={{ cursor: 'pointer' }}>
+                            <BorrowRequestFile currentItem={item} isApproved={item.isApproved}/>
+                        </Box>
+                    ) : (
+                        <Box width="120PX" sx={{ cursor: 'not-allowed', pointerEvents: 'none' }}>
+                            <BorrowRequestFile currentItem={item} isApproved={dark}/>
+                        </Box>
+                    )}
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Box sx={{ marginTop: 2 }}>
