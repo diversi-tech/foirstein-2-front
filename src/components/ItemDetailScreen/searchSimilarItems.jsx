@@ -2,6 +2,7 @@
 import React from 'react';
 import { ListSubheader, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import axios from 'axios';
+import { Tag } from '@mui/icons-material';
 
 async function getTags(itemId) {
   try {
@@ -23,6 +24,7 @@ export default function SearchSimilarItems(props) {
 
   const handleChange = (event) => {
     setSelection(event.target.value);
+    console.log(event.target.value);
     props.onSelected(event.target.value);
   };
 

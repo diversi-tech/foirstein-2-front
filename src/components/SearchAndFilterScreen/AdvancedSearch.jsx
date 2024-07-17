@@ -32,7 +32,6 @@ const AdvancedSearch = () => {
     getAdvancedSearchResult()
   };
 
-
 async function getAdvancedSearchResult() {
   try {
     const response = await axios.post('https://localhost:7118/api/Item/ReadByAttributes',item );

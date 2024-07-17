@@ -56,7 +56,7 @@ async function getSearchResult(keySearch) {
     }
   } catch (error) {
     console.error('error', error);
-    return null; // Handle error case
+    return null; 
   }
 }
 
