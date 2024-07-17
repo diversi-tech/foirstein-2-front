@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Box, Typography } from '@mui/material';
+import { TextField, Button, Grid, Box, Typography,alpha } from '@mui/material';
+import theme from '../../theme';
 import axios from 'axios';
 
 
@@ -47,7 +48,7 @@ async function getAdvancedSearchResult() {
 }
 
   return (
-    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2}>
+    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2} sx={{backgroundColor:'white'}}>
       <Typography variant="h6" gutterBottom>
         חיפוש מתקדם
       </Typography>
