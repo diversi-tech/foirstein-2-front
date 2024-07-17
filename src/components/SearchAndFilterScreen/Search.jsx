@@ -110,7 +110,7 @@ export default function SearchAppBar() {
           </Stack>
           <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
         </Search>
-      <Stack>
+      <Stack sx={{position:'absolute', zIndex:'1', width:'60%',marginRight:'17%'}}>
         {showAdvancedSearch && <AdvancedSearch />}
       </Stack>
     </Box>
