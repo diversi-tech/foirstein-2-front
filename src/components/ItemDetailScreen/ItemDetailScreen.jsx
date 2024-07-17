@@ -7,7 +7,6 @@ import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Rtl from './Rtl'
-import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 
 const ItemDetailScreenComponent = (props) => {
 
@@ -70,7 +69,7 @@ const ItemDetailScreenComponent = (props) => {
         <Grid item xs={12} md={6} style={{ textAlign: 'right' }}>
           <ItemDetailsDisplay currentItem={currentItem} />
         </Grid>
-        <div style={{ maxWidth: '318px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+        {/* <div style={{ maxWidth: '318px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}> */}
           {initialRating !== null && <Box width="100%" marginBottom={2}>
             <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />
           </Box>}
@@ -82,10 +81,7 @@ const ItemDetailScreenComponent = (props) => {
               <SearchSimilarItems itemId={itemId} category={currentItem.category} onSelected={props.onSelected} />
             </Rtl>
           </Box>
-          <Box width="120PX">
-            <BorrowRequestFile currentItem={currentItem} />
-          </Box>
-        </div>
+        {/* </div> */}
       </Grid>
     </div>
   );

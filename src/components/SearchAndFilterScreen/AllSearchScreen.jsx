@@ -1,7 +1,7 @@
 import SearchAppBar from "./Search";
-import Container from '@mui/material/Container';
 import PaginatedItemsPage from "./PaginationItems";
 import { useEffect, useState } from "react";
+import { Stack } from "@mui/material";
 
 function AllSearchScreen() {
   const [items, setItems] = useState([]);
@@ -18,9 +18,9 @@ function AllSearchScreen() {
 
   return (
     <>
-      <Container>
+      <Stack>
         <SearchAppBar />
-      </Container>
+      </Stack>
       <PaginatedItemsPage items={items} />
     </>
   );
