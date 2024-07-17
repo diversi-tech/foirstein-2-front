@@ -87,6 +87,24 @@ export default function SearchAppBar() {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }} >
+        <Search sx={{ padding: '1%' }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearchClick(); // Call handleSearchClick on Enter
+            }
+          }}>
+          <WrapperedSearchIcon onClick={handleSearchClick} />
+          <StyledInputBase
+            placeholder="חיפוש..."
+            inputProps={{ 'aria-label': 'search' }}
+            value={searchValue}
+            onChange={handleValue}
+          />
+          <Stack sx={{ marginLeft: '1%' }}>
+            {searchValue && <ClearIcon onClick={handleClearClick} />}
+          </Stack>
+          <FormatAlignCenterIcon onClick={handleAdvancedSearchClick} />
+        </Search>
       <Search sx={{ padding: '1%' }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
