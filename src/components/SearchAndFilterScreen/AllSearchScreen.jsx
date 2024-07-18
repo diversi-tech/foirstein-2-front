@@ -7,7 +7,8 @@ import { Stack } from "@mui/material";
 
 function AllSearchScreen() {
   const [items, setItems] = useState([]);
-
+  localStorage.setItem('SearchResult',JSON.stringify(items));
+  
   useEffect(() => {
     const fetchData = async () => {
       const storedResult = localStorage.getItem('SearchResult');
