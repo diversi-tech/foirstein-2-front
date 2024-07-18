@@ -25,7 +25,8 @@ const ItemDetailScreenComponent = (props) => {
 
   const { currentItem } = props;
   const itemId = currentItem.id;
-  const token = sessionStorage.getItem('jwt');
+  const token = window.parent.sessionStorage.getItem('jwt')
+  // const token = sessionStorage.getItem('jwt');
   const userId = getUserIdFromToken();
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
