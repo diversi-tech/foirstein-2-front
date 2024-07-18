@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 async function getSearchResult(keySearch) {
   try {
-    const response = await axios.get(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByString/' + keySearch);
+    const response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByString/' + keySearch);
     if (response.status === 200) {
       localStorage.setItem('SearchResult', JSON.stringify(response.data));
       return response.data;
