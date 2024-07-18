@@ -1,40 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import NoteComponent from './Note';
 import RatingComponent from './Rating';
 import SearchSimilarItems from './searchSimilarItems';
 import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import Rtl from './Rtl'
+import { CircularProgress } from '@mui/material';
+import { jwtDecode } from 'jwt-decode';
 
 const ItemDetailScreenComponent = (props) => {
 
+  const getUserIdFromToken = () => {
+    if (!token) return null;
+    try {
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+      return decoded['userId'];
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
+
   const { currentItem } = props;
-
   const itemId = currentItem.id;
-
-  const userId = useSelector(state => state.userReducer.currentUser).userId;
+  const token = window.parent.sessionStorage.getItem('jwt')
+  // const token = sessionStorage.getItem('jwt');
+  const userId = getUserIdFromToken();
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
 
   useEffect(() => {
-    const ratingNoteInitialization = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`https://localhost:7118/api/RatingNote/GetRatingNote/${userId}/${itemId}`);
+        const response = await axios.get(`${apiUrl}/api/RatingNote/GetRatingNote/${userId}/${itemId}`);
         setInitialRating(response.data.rating);
         setNoteText(response.data.note);
+        setLoading(false);
       } catch (error) {
         setInitialRating(0);
         setNoteText('');
+        setLoading(false);
         console.error('Error fetching initial data:', error);
       }
     };
 
-    ratingNoteInitialization();
+    fetchData();
   }, []);
 
-
+  
   const updateRatingNote = async (type, value) => {
     const thisRatingNote = {
       ratingNoteId: 0,
@@ -50,7 +67,7 @@ const ItemDetailScreenComponent = (props) => {
       setNoteText(value);
       thisRatingNote.note = value;
     }
-    const response = await axios.put(`https://localhost:7118/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
+    const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -62,7 +79,6 @@ const ItemDetailScreenComponent = (props) => {
     }
   };
 
-
   return (
     <div dir='ltr'>
       <Grid container justifyContent="center" sx={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center' }}>
@@ -70,20 +86,30 @@ const ItemDetailScreenComponent = (props) => {
           <ItemDetailsDisplay currentItem={currentItem} />
         </Grid>
         <div style={{ maxWidth: '318px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-          {initialRating !== null && <Box width="100%" marginBottom={2}>
-            <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />
-          </Box>}
-          {noteText !== null && <Box width="100%" marginBottom={2}>
-            <NoteComponent noteText={noteText} setNoteText={setNoteText} updateRatingNote={updateRatingNote} />
-          </Box>}
-          <Box width="100%" marginBottom={2}>
-            <Rtl>
-              <SearchSimilarItems itemId={itemId} category={currentItem.category} onSelected={props.onSelected} />
-            </Rtl>
-          </Box>
+          {loading ? (
+            <div style={{maxWidth: '318px'}}>
+            <Box style={{width:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 60 }}>
+              <CircularProgress />
+            </Box></div>
+          ) : (
+            <>
+              {initialRating !== null && <Box width="100%" marginBottom={2}>
+                <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />
+              </Box>}
+              {noteText !== null && <Box width="100%" marginBottom={2}>
+                <NoteComponent noteText={noteText} setNoteText={setNoteText} updateRatingNote={updateRatingNote} />
+              </Box>}
+              <Box width="100%" marginBottom={2}>
+                <Rtl>
+                  <SearchSimilarItems itemId={itemId} category={currentItem.category} onSelected={props.onSelected} />
+                </Rtl>
+              </Box>
+            </>
+          )}
         </div>
       </Grid>
     </div>
   );
 };
-export default ItemDetailScreenComponent
+
+export default ItemDetailScreenComponent;
