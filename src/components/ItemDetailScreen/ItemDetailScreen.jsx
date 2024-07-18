@@ -30,7 +30,7 @@ const ItemDetailScreenComponent = (props) => {
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
   const [loading, setLoading] = useState(true);
-  const apiUrl = process.env.REACT_APP_SERVER_UR;
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
 
   useEffect(() => {
     const fetchData = async () => {
