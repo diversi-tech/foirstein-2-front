@@ -25,10 +25,9 @@ const Item = ({ item }) => {
         try {
             let response = null;
             if (isNaN(search)) {
-                response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByCategory/' + search);
+                response = await axios.get(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByCategory/' + search);
             } else {
-                console.log(search);
-                response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByTag/' + search);
+                response = await axios.get(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByTag/' + search);
             }
             if (response.status === 200) {
                 localStorage.setItem('SearchResult', JSON.stringify(response.data));
@@ -57,19 +56,20 @@ const Item = ({ item }) => {
                 }}
             >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 1 }}>
-                    <Typography variant="h5">
+                    <Typography variant="h5" width={"10%"}>
                         {item.title}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="body2" width={"10%"}>
                         יוצר: {item.author}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="body2" width={"10%"}>
                         קטגוריה: {item.category}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="body2" width={"15%"}>
                         תאריך עדכון: {formatDateFromISO(item.createdAt)}
                     </Typography>
                     <Button
+                        width={"10%"}
                         size="small"
                         variant="outlined"
                         onClick={handleExpandClick}
@@ -78,12 +78,12 @@ const Item = ({ item }) => {
                         {expanded ? 'פחות מידע' : 'מידע נוסף'}
                     </Button>
                     {item.isApproved ? (
-                        <Box width="120PX" sx={{ cursor: 'pointer' }}>
-                            <BorrowRequestFile currentItem={item} isApproved={item.isApproved}/>
+                        <Box width="10%" sx={{ cursor: 'pointer' }}>
+                            <BorrowRequestFile currentItem={item} isApproved={item.isApproved} />
                         </Box>
                     ) : (
-                        <Box width="120PX" sx={{ cursor: 'not-allowed', pointerEvents: 'none' }}>
-                            <BorrowRequestFile currentItem={item} isApproved={dark}/>
+                        <Box width="10%" sx={{ cursor: 'not-allowed', pointerEvents: 'none' }}>
+                            <BorrowRequestFile currentItem={item} isApproved={dark} />
                         </Box>
                     )}
                 </Box>
