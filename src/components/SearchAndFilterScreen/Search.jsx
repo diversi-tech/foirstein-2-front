@@ -9,6 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
 import AdvancedSearch from './AdvancedSearch';
+import { useSelector } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -42,30 +43,42 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-async function getSearchResult(keySearch) {
-  try {
-    const response = await axios.get(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByString/' + keySearch);
-    if (response.status === 200) {
-      localStorage.setItem('SearchResult', JSON.stringify(response.data));
-      return response.data;
-    } else {
-      throw new Error('error');
-    }
-  } catch (error) {
-    console.error('error', error);
-    return null;
-  }
-}
-
 export default function SearchAppBar() {
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+  const userId = 1
+  // useSelector(state => state.userReducer.currentUser).userId
+
+  let searchLog = {}
+
+  async function getSearchResult(keySearch) {
+    try {
+      const response = await axios.get(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByString/' + keySearch);
+      if (response.status === 200) {
+        localStorage.setItem('SearchResult', JSON.stringify(response.data));
+        await axios.post(process.env.REACT_APP_SERVER_UR + '/api/SearchLog/create', searchLog)
+        return response.data;
+      } else {
+        throw new Error('error');
+      }
+    } catch (error) {
+      console.error('error', error);
+      return null;
+    }
+  }
+
 
   const handleValue = (e) => {
     setSearchValue(e.target.value);
   };
 
   const handleSearchClick = async () => {
+    searchLog = {
+      "logId": 0,
+      "userId": userId,
+      "searchQuery": searchValue,
+      "searchDate": Date.now
+    }
     await getSearchResult(searchValue);
   };
 
