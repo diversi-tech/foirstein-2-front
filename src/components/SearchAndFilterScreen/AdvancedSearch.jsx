@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Box, Typography,alpha } from '@mui/material';
+import { TextField, Button, Grid, Box, Typography, alpha } from '@mui/material';
 import theme from '../../theme';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 
 const AdvancedSearch = () => {
   // State variables to manage form inputs
@@ -12,8 +12,11 @@ const AdvancedSearch = () => {
   const [category, setCategory] = useState("");
   const [createdAt, setCreatedAt] = useState("0001-01-01");
 
-  let item = {}
+  const userId = 1
+  // useSelector(state => state.userReducer.currentUser).userId;
 
+  let item = {}
+  let searchLog = {}
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,27 +31,34 @@ const AdvancedSearch = () => {
       "createdAt": createdAt,
       "updatedAt": "0001-01-01T00:00:00"
     }
+    searchLog = {
+      "logId": 0,
+      "userId": userId,
+      "searchQuery": `Title: ${title} Author: ${author} Description: ${description} Category: ${category} Created At: ${createdAt}`,
+      "searchDate": Date.now
+    }
     console.log('Form submitted:', { title, author, description, category, createdAt });
     getAdvancedSearchResult()
   };
 
-async function getAdvancedSearchResult() {
-  try {
-    const response = await axios.post(process.env.REACT_APP_SERVER_UR+'/api/Item/ReadByAttributes',item );
-    if (response.status === 200) {
-      localStorage.setItem('SearchResult', JSON.stringify(response.data));
-      return response.data;
-    } else {
-      throw new Error('error');
+  async function getAdvancedSearchResult() {
+    try {
+      const response = await axios.post(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByAttributes', item);
+      if (response.status === 200) {
+        localStorage.setItem('SearchResult', JSON.stringify(response.data));
+        await axios.post(process.env.REACT_APP_SERVER_UR + '/api/SearchLog/create',searchLog)
+        return response.data;
+      } else {
+        throw new Error('error');
+      }
+    } catch (error) {
+      console.error('error', error);
+      return null; // Handle error case
     }
-  } catch (error) {
-    console.error('error', error);
-    return null; // Handle error case
   }
-}
 
   return (
-    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2} sx={{backgroundColor:'white'}} >
+    <Box p={3} border={1} borderColor="grey.300" borderRadius={2} boxShadow={2} sx={{ backgroundColor: 'white' }} >
       <Typography variant="h6" gutterBottom>
         חיפוש מתקדם
       </Typography>

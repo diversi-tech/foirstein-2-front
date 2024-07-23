@@ -6,7 +6,6 @@ import SearchSimilarItems from './searchSimilarItems';
 import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
 import Rtl from './Rtl'
-import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 import { CircularProgress } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 
@@ -16,6 +15,7 @@ const ItemDetailScreenComponent = (props) => {
     if (!token) return null;
     try {
       const decoded = jwtDecode(token);
+      console.log(decoded);
       return decoded['userId'];
     } catch (error) {
       console.error('Error decoding token:', error);
@@ -25,12 +25,13 @@ const ItemDetailScreenComponent = (props) => {
 
   const { currentItem } = props;
   const itemId = currentItem.id;
+  // const token = window.parent.sessionStorage.getItem('jwt')
   const token = sessionStorage.getItem('jwt');
   const userId = getUserIdFromToken();
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
   const [loading, setLoading] = useState(true);
-  const apiUrl = process.env.REACT_APP_SERVER_UR;
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
 
   useEffect(() => {
     const fetchData = async () => {
