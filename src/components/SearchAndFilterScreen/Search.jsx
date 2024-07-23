@@ -77,7 +77,7 @@ export default function SearchAppBar() {
       "logId": 0,
       "userId": userId,
       "searchQuery": searchValue,
-      "searchDate": Date.now
+      "searchDate": new Date().toISOString()
     }
     await getSearchResult(searchValue);
   };
