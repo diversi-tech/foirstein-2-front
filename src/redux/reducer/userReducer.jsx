@@ -6,7 +6,7 @@ export const InitialState={
        
     ],
     currentUser:{
-        
+        UserId:5
     }
      
 }
