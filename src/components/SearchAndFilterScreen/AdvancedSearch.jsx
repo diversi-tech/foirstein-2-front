@@ -43,10 +43,10 @@ const AdvancedSearch = () => {
 
   async function getAdvancedSearchResult() {
     try {
-      const response = await axios.post(process.env.REACT_APP_SERVER_UR + '/api/Item/ReadByAttributes', item);
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadByAttributes', item);
       if (response.status === 200) {
         localStorage.setItem('SearchResult', JSON.stringify(response.data));
-        await axios.post(process.env.REACT_APP_SERVER_UR + '/api/SearchLog/create',searchLog)
+        await axios.post(process.env.REACT_APP_SERVER_URL + '/api/SearchLog/create',searchLog)
         return response.data;
       } else {
         throw new Error('error');
