@@ -81,6 +81,8 @@ export const Nav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [adminAnchorEl, setAdminAnchorEl] = useState(null);
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+  const [libarianAnchorEl, setlibarianAnchorEl] = useState(null);
+  const [islibarianMenuOpen, setIslibarianMenuOpen] = useState(false);
   const greetingMessage = getGreetingMessage();
   const role = isLoggedIn ? getRoleFromToken() : null;
   const userName = isLoggedIn ? getUserNameFromToken() : null;
@@ -130,6 +132,15 @@ export const Nav = () => {
     setIsAdminMenuOpen(false);
   };
 
+  const handleLibarianMenuOpen = (event) => {
+    setlibarianAnchorEl(event.currentTarget);
+    setIslibarianMenuOpen(true);
+  };
+  const handleLibarianMenuClose = () => {
+    setlibarianAnchorEl(null);
+    setIslibarianMenuOpen(false);
+  };
+
   const renderUserAvatar = (name) => {
     if (name) {
       return name.charAt(0).toUpperCase();
@@ -164,7 +175,7 @@ export const Nav = () => {
             </StyledLink>)
             
           }
-          {role === 'Admin' || 1 == 1 && (
+          {role === 'Admin' && (
             <>
               <AdminButton
                 onMouseEnter={handleAdminMenuOpen}
@@ -193,13 +204,11 @@ export const Nav = () => {
                     <Paper onMouseEnter={handleAdminMenuOpen} onMouseLeave={handleAdminMenuClose}>
                       <ClickAwayListener onClickAway={handleAdminMenuClose}>
                         <MenuList autoFocusItem={isAdminMenuOpen} id="menu-list-grow">
-                          <MenuItem onClick={() => navigate('/SearchAppBar')}> חיפוש</MenuItem>
+                          {/* <MenuItem onClick={() => navigate('/SearchAppBar')}> חיפוש</MenuItem> */}
                           <MenuItem onClick={() => navigate('/ActivityLog')}>יומן פעילות</MenuItem>
                           <MenuItem onClick={() => navigate('/changePermission')}>שינוי הרשאות</MenuItem>
                           <MenuItem onClick={() => navigate('/Charts')}>גרפים</MenuItem>
                           <MenuItem onClick={() => navigate('/ManagerDashboard')}>דוחות</MenuItem>
-                          {/* <MenuItem onClick={() => navigate('/UserManagementComponent')}>ניהול משתמשים</MenuItem> */}
-                          {/* <MenuItem onClick={() => navigate('/Librarian')}>הרשאות ספרנית</MenuItem> */}
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>
@@ -208,14 +217,49 @@ export const Nav = () => {
               </Popper>
             </>
           )}
-          {(role === 'Librarian' || role === 'Admin' || 1 == 1) && (
-            <>
-              <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
-                ניהול משתמשים
-              </StyledLink>
-              <StyledLink to="/Librarian" active={location.pathname === '/Librarian'}>
-                הרשאות ספרנית
-              </StyledLink></>
+     {(role === 'Librarian'||role === 'Admin') && (
+                      <>
+                        <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
+                             ניהול משתמשים
+                       </StyledLink>
+                       <AdminButton
+                onMouseEnter={handleLibarianMenuOpen}
+                onMouseLeave={handleLibarianMenuClose}
+                active={islibarianMenuOpen || ['/items', '/itemsPendingApproval', '/studentRequest', ,'/tag-list'].includes(location.pathname)}
+                ref={(node) => {
+                  setlibarianAnchorEl(node);
+                }}
+              >
+                 אזור ספרנית
+              </AdminButton>
+              <Popper
+                open={islibarianMenuOpen}
+                anchorEl={libarianAnchorEl}
+                role={undefined}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                    }}
+                  >
+                    <Paper onMouseEnter={handleLibarianMenuOpen} onMouseLeave={handleLibarianMenuClose}>
+                      <ClickAwayListener onClickAway={handleLibarianMenuClose}>
+                        <MenuList autoFocusItem={islibarianMenuOpen} id="menu-list-grow">
+                          <MenuItem onClick={() => navigate('/items')}>כל הפריטים</MenuItem>
+                          <MenuItem onClick={() => navigate('/itemsPendingApproval')}>ממתינים לאישור </MenuItem>
+                          <MenuItem onClick={() => navigate('/studentRequest')}>בקשות של תלמידות</MenuItem>
+                          <MenuItem onClick={() => navigate('/tag-list')}>ניהול תגיות</MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+                    </>
           )}
           <LeftSection>
             {isLoggedIn ? (
