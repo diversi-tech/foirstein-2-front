@@ -14,6 +14,7 @@ function App() {
   <Provider store={store}>
     <ThemeProvider theme={theme}>
     <div className="App">
+
      <Routing />      
     
           </div>

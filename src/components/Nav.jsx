@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppBar, Avatar, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Popper, Paper, ClickAwayListener, Grow, MenuList } from '@mui/material';
 import { styled } from '@mui/system';
-// import { getRoleFromToken, getUserNameFromToken } from './decipheringToken';
+import { getRoleFromToken, getUserNameFromToken, getCookie } from './decipheringToken';
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
@@ -77,13 +77,13 @@ const getGreetingMessage = () => {
 export const Nav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('jwt'));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie('jwt'));
   const [anchorEl, setAnchorEl] = useState(null);
   const [adminAnchorEl, setAdminAnchorEl] = useState(null);
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
   const greetingMessage = getGreetingMessage();
-  const role = '';//isLoggedIn ? getRoleFromToken() : null;
-  const userName = '';//isLoggedIn ? getUserNameFromToken() : null;
+  const role = isLoggedIn ? getRoleFromToken() : null;
+  const userName = isLoggedIn ? getUserNameFromToken() : null;
 
   useEffect(() => {
     if (!isLoggedIn && (location.pathname === '/UserManagementComponent' || location.pathname === '/ActivityLog' || location.pathname === '/changePermission' || location.pathname === '/Charts')) {
@@ -92,11 +92,11 @@ export const Nav = () => {
   }, [isLoggedIn, location.pathname, navigate]);
 
   useEffect(() => {
-    setIsLoggedIn(!!sessionStorage.getItem('jwt'));
+    setIsLoggedIn(!!getCookie('jwt'));
   }, [location.pathname]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('jwt');
+    document.cookie = `jwt=; path=/; domain=.foirstein.diversitech.co.il; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
     setIsLoggedIn(false);
     navigate('/home');
     console.log('Logging out...');
@@ -109,7 +109,7 @@ export const Nav = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleProfileClickToRequestStatus = () => {
     navigate('/StatusListView');
     handleMenuClose();
