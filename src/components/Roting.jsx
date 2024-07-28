@@ -19,7 +19,7 @@ function ExternalRedirect({ url }) {
 export const Routing = () => {
   return (
     <HashRouter>
-      <Nav />
+      <Nav/>
      
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
@@ -41,6 +41,10 @@ export const Routing = () => {
         <Route path='login/security-question/reset-password/password-reset-success/logi' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='login/security-question/reset-password/password-reset-success/login/home' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='/passwordRecovery' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
+        <Route path='/items' element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/items" />} />
+        <Route path='/itemsPendingApproval' element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/itemsPendingApproval" />} />
+        <Route path='/studentRequest' element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/studentRequest" />} />
+        <Route path='/tag-list' element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/tag-list" />} />
       </Routes>
       <Footer />
     </HashRouter>
