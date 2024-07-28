@@ -107,9 +107,9 @@ const StatusListView = () => {
         setProcessedRequests(data1.borrowApprovalRequests);
         setLoadData(true);  
 
-        // const response2 = await fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`);
-        // const data2 = await response2.json();
-        // dispatch(FillData(data2));
+        const response2 = await fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`);
+        const data2 = await response2.json();
+        dispatch(FillData(data2));
       } catch (error) {
         setError(error);
         setLoadData(false);
@@ -221,7 +221,7 @@ const StatusListView = () => {
             }
             style={{ marginBottom: '20px', backgroundColor: '#ffcccc', color: '#b20000', direction: 'rtl' }}
           >
-            {/* {`התאריך של ההחזרה עבור ${row.productName} עבר! אנא החזר את המוצר בהקדם האפשרי.`} */}
+
             {`הי, הלו תתעורר! מה קורה פה עוד לא החזרת את${row.productName}  `}
             </Alert>
         </Collapse>
@@ -399,7 +399,7 @@ const StatusListView = () => {
         </Dialog>
         <Backdrop open={loading} style={{ zIndex: 1 }}>
           <CircularProgress />
-        </Backdrop>
+        </Backdrop> 
       </ThemeProvider>
     </CacheProvider>
   );
