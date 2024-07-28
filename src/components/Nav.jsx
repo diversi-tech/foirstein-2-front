@@ -109,7 +109,12 @@ export const Nav = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  
+  const handleProfileClickToRequestStatus = () => {
+    navigate('/StatusListView');
+    handleMenuClose();
+  };
+  
   const handleProfileClick = () => {
     navigate('/profile');
     handleMenuClose();
