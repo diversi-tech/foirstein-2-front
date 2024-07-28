@@ -222,7 +222,7 @@ const StatusListView = () => {
             style={{ marginBottom: '20px', backgroundColor: '#ffcccc', color: '#b20000', direction: 'rtl' }}
           >
             {/* {`התאריך של ההחזרה עבור ${row.productName} עבר! אנא החזר את המוצר בהקדם האפשרי.`} */}
-            {`הי, הלו תתעורר! מה קוה פה עוד לא החזרת את${row.productName} כולם מחכים לזה `}
+            {`הי, הלו תתעורר! מה קורה פה עוד לא החזרת את${row.productName} `}
             </Alert>
         </Collapse>
       );
@@ -399,7 +399,7 @@ const StatusListView = () => {
         </Dialog>
         <Backdrop open={loading} style={{ zIndex: 1 }}>
           <CircularProgress />
-        </Backdrop>
+        </Backdrop> 
       </ThemeProvider>
     </CacheProvider>
   );
