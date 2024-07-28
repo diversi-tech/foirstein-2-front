@@ -157,9 +157,7 @@ export const Nav = () => {
             <StyledLink to="/SearchAppBar" active={location.pathname === '/SearchAppBar'}>
               חיפוש
             </StyledLink>)
-            (<StyledLink to="/StatusListView" active={location.pathname === '/StatusListView'}>
-              סטטוס בקשות
-            </StyledLink>)
+            
           }
           {role === 'Admin' || 1 == 1 && (
             <>
@@ -233,6 +231,7 @@ export const Nav = () => {
                   onClose={handleMenuClose}
                 >
                   <MenuItem onClick={handleProfileClick}>ניהול חשבון</MenuItem>
+                  <MenuItem onClick={handleProfileClickToRequestStatus}>רשימת השאלות</MenuItem>
                   <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
               </>
