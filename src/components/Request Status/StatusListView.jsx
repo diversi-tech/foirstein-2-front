@@ -102,6 +102,7 @@ const StatusListView = () => {
 
   const fetchData = async () => {
     try {
+      console.log(currentUser+"currentUser")
       const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`);
       const data1 = await response1.json();
       setPendingRequests(data1.borrowRequests);
