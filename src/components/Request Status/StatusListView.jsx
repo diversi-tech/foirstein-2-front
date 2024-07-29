@@ -58,13 +58,13 @@ const getStatusIcon = (status, displayType) => {
           <CheckCircleIcon style={{ color: 'green' }} />
         </Tooltip>
       ) : 'אושר';
-    case 2:
+    case 0:
       return displayType === 'icon' ? (
         <Tooltip title="נדחה">
           <CancelIcon style={{ color: 'red' }} />
         </Tooltip>
       ) : 'נדחה';
-    case 0:
+    case 2:
       return displayType === 'icon' ? (
         <Tooltip title="ממתין">
           <HourglassEmptyIcon style={{ color: 'orange' }} />
@@ -98,23 +98,24 @@ const StatusListView = () => {
   const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`);
-        const data1 = await response1.json();
-        setPendingRequests(data1.borrowRequests);
-        setProcessedRequests(data1.borrowApprovalRequests);
-        setLoadData(true);  
+  const fetchData = async () => {
+    try {
+      const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`);
+      const data1 = await response1.json();
+      setPendingRequests(data1.borrowRequests);
+      setProcessedRequests(data1.borrowApprovalRequests);
+      setLoadData(true);
 
-        const response2 = await fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`);
-        const data2 = await response2.json();
-        dispatch(FillData(data2));
-      } catch (error) {
-        setError(error);
-        setLoadData(false);
-      }
-    };
+      const response2 = await fetch(`${apiUrl}/api/BorrowRequest/getAllItemToUser/${currentUser.UserId}`);
+      const data2 = await response2.json();
+      dispatch(FillData(data2));
+    } catch (error) {
+      setError(error);
+      setLoadData(false);
+    }
+  };
+  useEffect(() => {
+
 
     fetchData();
   }, []);
@@ -123,7 +124,7 @@ const StatusListView = () => {
     setLoading(true);
 
     setTimeout(() => {
-      fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`)
+      fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -180,28 +181,19 @@ const StatusListView = () => {
     handleDialogClose();
   };
 
-  const handleExpandClick = (requestId) => {
-    setExpandedRequestId(expandedRequestId === requestId ? null : requestId);
+  const handleExpandClick = (row) => {
+    setExpandedRequestId(expandedRequestId === row.requestId ? null : row.requestId);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleAlertClose = (requestId) => {
-    setClosedAlerts((prev) => ({ ...prev, [requestId]: true }));
-  };
 
   if (error) return <Typography color="error">Error: {error.message}</Typography>;
-
+  
   const renderAlert = (row) => {
     const currentDate = new Date();
     const untilDate = new Date(row.untilDate);
+    const daysOverdue = Math.floor((currentDate - untilDate) / (1000 * 60 * 60 * 24)); // חישוב מספר הימים שעברו
+    const itemTitle = itemList.find(item => item.id === row.itemId)?.title || 'טוען...'; // מציאת שם המוצר
 
     if (untilDate < currentDate && !row.isReturned && !closedAlerts[row.requestId]) {
       return (
@@ -209,21 +201,10 @@ const StatusListView = () => {
           <Alert
             severity="error"
             variant="filled"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => handleAlertClose(row.requestId)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
             style={{ marginBottom: '20px', backgroundColor: '#ffcccc', color: '#b20000', direction: 'rtl' }}
           >
-            {/* {`התאריך של ההחזרה עבור ${row.productName} עבר! אנא החזר את המוצר בהקדם האפשרי.`} */}
-            {`הי, הלו תתעורר! מה קורה פה עוד לא החזרת את${row.productName} `}
-            </Alert>
+            {` הפריט ${itemTitle} עדיין לא הוחזר. עברו ${daysOverdue} ימים ! . `}
+          </Alert>
         </Collapse>
       );
     }
@@ -247,7 +228,7 @@ const StatusListView = () => {
                 </Grid>
               </Grid>
               <Divider variant="middle" style={{ margin: '20px 0' }} />
-              {pendingRequests.map((row) => renderAlert(row))}
+              {processedRequests.map((row) => renderAlert(row))}
               <TableContainer component={Paper} sx={{ overflowX: 'hidden' }}>
                 <Table sx={{ minWidth: 650 }}>
                   <TableHead>
@@ -268,10 +249,11 @@ const StatusListView = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {pendingRequests.map((row) => (
-                      <React.Fragment key={row.requestId}>
-                        <TableRow>
-                          <TableCell align="center">
+
+                    {pendingRequests.map((row, index) => (
+                      <React.Fragment key={row.requestId} >
+                        <TableRow hover sx={{ margin: 0, padding: 0 }}>
+                        <TableCell align="center" >
                             <IconButton
                               aria-label="delete"
                               onClick={() => handleDialogOpen(row.requestId)}
@@ -281,7 +263,7 @@ const StatusListView = () => {
                           </TableCell>
                           <TableCell align="center">
                             <IconButton
-                              onClick={() => handleExpandClick(row.requestId)}
+                              onClick={() => handleExpandClick(row)}
                               aria-label="expand row"
                             >
                               {expandedRequestId === row.requestId ? (
@@ -293,7 +275,7 @@ const StatusListView = () => {
                           </TableCell>
                           {isMediumScreen && (
                             <>
-                              <TableCell align="center">
+                              <TableCell align="center" >
                                 {new Date(row.untilDate).toLocaleDateString('he-IL')}
                               </TableCell>
                               <TableCell align="center">
@@ -301,35 +283,35 @@ const StatusListView = () => {
                               </TableCell>
                             </>
                           )}
-                          <TableCell align="center">
-                            {getStatusDisplay(row.status)}
+                          <TableCell align="center" >
+                            <Button onClick={() => setShowIcons(!showIcons)}>
+                              {getStatusDisplay(2)}
+                            </Button>
                           </TableCell>
-                          <TableCell align="center">{row.productName}</TableCell>
+                          <TableCell align="center" >
+                            {itemList.find(item => item.id === row.itemId)?.title || 'טוען...'}
+                          </TableCell>
                           {isSmallScreen && (
-                            <TableCell align="center">{row.requestId}</TableCell>
+                            <TableCell align="center" sx={{ display: { margin: 0, padding: 0, sm: 'table-cell', xs: 'none' } }}>{index + 1}</TableCell>
                           )}
                         </TableRow>
-                        {expandedRequestId === row.requestId && (
-                          <TableRow>
-                            <TableCell colSpan={isMediumScreen ? 7 : 4}>
-                              <RequestDetails row={row} />
-                            </TableCell>
-                          </TableRow>
+                        {itemList && (
+                          <RequestDetails request={itemList.find(item => item.id === row.itemId)} expanded={expandedRequestId === row.requestId} />
                         )}
                       </React.Fragment>
                     ))}
                     <TableRow>
                       <TableCell colSpan={isMediumScreen ? 7 : 4} align="center">
-                        <Divider />
+                        <Divider sx={{ borderColor: 'blue', borderStyle: 'dashed' }} />
                       </TableCell>
                     </TableRow>
-                    {processedRequests.map((row) => (
+                    {processedRequests.map((row, index) => (
                       <React.Fragment key={row.requestId}>
-                        <TableRow>
+                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
                           <TableCell align="center">-</TableCell>
                           <TableCell align="center">
                             <IconButton
-                              onClick={() => handleExpandClick(row.requestId)}
+                              onClick={() => handleExpandClick(row)}
                               aria-label="expand row"
                             >
                               {expandedRequestId === row.requestId ? (
@@ -339,45 +321,48 @@ const StatusListView = () => {
                               )}
                             </IconButton>
                           </TableCell>
+                          {/* {isMediumScreen && (
+                            <>
+                              <TableCell align="center">
+                                {new Date(row.untilDate).toLocaleDateString('he-IL')||'-'}
+                              </TableCell>
+                              <TableCell align="center">
+                                {new Date(row.fromDate).toLocaleDateString('he-IL')||'-'}
+                              </TableCell>
+                            </>
+                          )} */}
                           {isMediumScreen && (
                             <>
                               <TableCell align="center">
-                                {new Date(row.untilDate).toLocaleDateString('he-IL')}
+                                {new Date(row.approvalDate).toLocaleDateString('he-IL')}
                               </TableCell>
                               <TableCell align="center">
-                                {new Date(row.fromDate).toLocaleDateString('he-IL')}
+                                {new Date(row.requestDate).toLocaleDateString('he-IL')}
                               </TableCell>
                             </>
                           )}
+
                           <TableCell align="center">
-                            {getStatusDisplay(row.status)}
+                            <Button onClick={() => setShowIcons(!showIcons)}>
+                              {getStatusDisplay(row.requestStatus)}
+                            </Button>
                           </TableCell>
-                          <TableCell align="center">{row.productName}</TableCell>
+                          <TableCell align="center">
+                            {itemList.find(item => item.id === row.itemId)?.title || 'טוען...'}
+                          </TableCell>
                           {isSmallScreen && (
-                            <TableCell align="center">{row.requestId}</TableCell>
+                            <TableCell align="center" sx={{ display: { sm: 'table-cell', xs: 'none' } }}>{pendingRequests.length + index + 1}</TableCell>
                           )}
                         </TableRow>
-                        {expandedRequestId === row.requestId && (
-                          <TableRow>
-                            <TableCell colSpan={isMediumScreen ? 7 : 4}>
-                              <RequestDetails row={row} />
-                            </TableCell>
-                          </TableRow>
+                        {itemList && (
+                          <RequestDetails request={itemList.find(item => item.id === row.itemId)} expanded={expandedRequestId === row.requestId} />
                         )}
                       </React.Fragment>
                     ))}
+
                   </TableBody>
                 </Table>
               </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={pendingRequests.length + processedRequests.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
             </Paper>
           </Grid>
         </Grid>
@@ -399,7 +384,7 @@ const StatusListView = () => {
         </Dialog>
         <Backdrop open={loading} style={{ zIndex: 1 }}>
           <CircularProgress />
-        </Backdrop> 
+        </Backdrop>
       </ThemeProvider>
     </CacheProvider>
   );
@@ -509,7 +494,7 @@ export default StatusListView;
 //         const data1 = await response1.json();
 //         setPendingRequests(data1.borrowRequests);
 //         setProcessedRequests(data1.borrowApprovalRequests);
-//         setLoadData(true);  
+//         setLoadData(true);
 
 //         // const response2 = await fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`);
 //         // const data2 = await response2.json();
@@ -865,7 +850,7 @@ export default StatusListView;
 //         const data1 = await response1.json();
 //         setPendingRequests(data1.borrowRequests);
 //         setProcessedRequests(data1.borrowApprovalRequests);
-//         setLoadData(true);  
+//         setLoadData(true);
 
 //         const response2 = await fetch(`${apiUrl}/api/BorrowRequest/borrow-requests/${currentUser.UserId}`);
 //         const data2 = await response2.json();
