@@ -101,6 +101,7 @@ const StatusListView = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   const fetchData = async () => {
+     console.log(currentUser+"currentUser vvvv")
     try {
       console.log(currentUser+"currentUser")
       const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`);
