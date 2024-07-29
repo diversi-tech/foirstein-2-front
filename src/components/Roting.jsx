@@ -9,6 +9,8 @@ import Footer from "./footer";
 import { useEffect } from "react";
 import StatusListView from "./Request Status/StatusListView";
 import SearchAppBar from "./SearchAndFilterScreen/Search";
+import AllSearchScreen from "./SearchAndFilterScreen/AllSearchScreen";
+
 function ExternalRedirect({ url }) {
   useEffect(() => {
     window.location.href = url;
@@ -23,7 +25,7 @@ export const Routing = () => {
      
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
-        <Route path="/SearchAppBar" element={<SearchAppBar />} />
+        <Route path="/SearchAppBar" element={<AllSearchScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
         <Route path='/Charts' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Charts" />} />
         <Route path='/changePermission' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/changePermission" />} />
