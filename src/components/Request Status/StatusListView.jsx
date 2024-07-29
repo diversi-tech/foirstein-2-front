@@ -40,6 +40,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import RequestDetails from './RequestDetails'; // ייבוא הקומפוננטה
 import CloseIcon from '@mui/icons-material/Close';
+import {  getUserIdFromTokenid } from '../decipheringToken';
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -89,12 +90,13 @@ const StatusListView = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteRequestId, setDeleteRequestId] = useState(null);
   const [closedAlerts, setClosedAlerts] = useState({});
-  const currentUser = useSelector(state => state.userReducer.currentUser);
+  //const currentUser = useSelector(state => state.userReducer.currentUser);
   const itemList = useSelector(state => state.itemReducer.itemList);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [processedRequests, setProcessedRequests] = useState([]);
   const apiUrl = process.env.REACT_APP_SERVER_URL;
-
+  const currentUser = getUserIdFromTokenid();
+  
   const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
