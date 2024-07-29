@@ -46,7 +46,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchAppBar() {
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
-  const currentUser = useSelector(state => state.userReducer.currentUser);
+  const currentUser = useSelector(state => state.userReducer.userId);
   const userId = currentUser ? currentUser.userId : 1;
 
   let searchLog = {}
