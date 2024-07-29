@@ -90,7 +90,6 @@ const StatusListView = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteRequestId, setDeleteRequestId] = useState(null);
   const [closedAlerts, setClosedAlerts] = useState({});
-  //const currentUser = useSelector(state => state.userReducer.currentUser);
   const itemList = useSelector(state => state.itemReducer.itemList);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [processedRequests, setProcessedRequests] = useState([]);
@@ -101,9 +100,7 @@ const StatusListView = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   const fetchData = async () => {
-     console.log(currentUser+"currentUser vvvv")
     try {
-      console.log(currentUser+"currentUser")
       const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser}`);
       const data1 = await response1.json();
       setPendingRequests(data1.borrowRequests);
