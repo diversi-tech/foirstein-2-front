@@ -51,6 +51,7 @@ export default function SearchAppBar() {
 
   let searchLog = {}
 
+
   async function getSearchResult(keySearch) {
     try {
       const response = await axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadByString/' + keySearch);
@@ -96,7 +97,7 @@ export default function SearchAppBar() {
       padding: '5%',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundImage: 'url(https://foirstein-1-front-aojx.onrender.com/assets/pic/books.png)',
+      backgroundImage: 'url(http://foirstein-1-front-aojx.onrender.com/assets/pic/books.png)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }} >
