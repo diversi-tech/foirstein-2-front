@@ -114,6 +114,8 @@ export const Nav = () => {
 
   const handleProfileClickToRequestStatus = () => {
     navigate('/StatusListView');
+        console.log("StatusListView")
+
     handleMenuClose();
   };
   
