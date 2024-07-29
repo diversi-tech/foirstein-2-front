@@ -12,8 +12,8 @@ const AdvancedSearch = () => {
   const [category, setCategory] = useState("");
   const [createdAt, setCreatedAt] = useState("0001-01-01");
 
-  const userId = 1
-  // useSelector(state => state.userReducer.currentUser).userId;
+  const currentUser = useSelector(state => state.userReducer.currentUser);
+  const userId = currentUser ? currentUser.userId : 1;
 
   let item = {}
   let searchLog = {}
