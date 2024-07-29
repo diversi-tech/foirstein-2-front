@@ -104,13 +104,13 @@ const StatusListView = () => {
      console.log(currentUser+"currentUser vvvv")
     try {
       console.log(currentUser+"currentUser")
-      const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`);
+      const response1 = await fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser}`);
       const data1 = await response1.json();
       setPendingRequests(data1.borrowRequests);
       setProcessedRequests(data1.borrowApprovalRequests);
       setLoadData(true);
 
-      const response2 = await fetch(`${apiUrl}/api/BorrowRequest/getAllItemToUser/${currentUser.UserId}`);
+      const response2 = await fetch(`${apiUrl}/api/BorrowRequest/getAllItemToUser/${currentUser}`);
       const data2 = await response2.json();
       dispatch(FillData(data2));
     } catch (error) {
@@ -128,7 +128,7 @@ const StatusListView = () => {
     setLoading(true);
 
     setTimeout(() => {
-      fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser.UserId}`)
+      fetch(`${apiUrl}/api/BorrowRequest/getBorrowRequestsAndApprovals/${currentUser}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
