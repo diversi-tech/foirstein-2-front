@@ -25,9 +25,10 @@ const Item = ({ item }) => {
         try {
             let response = null;
             if (isNaN(search)) {
-                response = await axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadByCategory/' + search);
+                response = await axios.get('http://localhost:5135/api/Item/ReadByCategory/' + search);
             } else {
-                response = await axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadByTag/' + search);
+                console.log(search);
+                response = await axios.get('http://localhost:5135/api/Item/ReadByTag/' + search);
             }
             if (response.status === 200) {
                 localStorage.setItem('SearchResult', JSON.stringify(response.data));
