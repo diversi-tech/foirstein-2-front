@@ -7,27 +7,12 @@ import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
 import Rtl from './Rtl'
 import { CircularProgress } from '@mui/material';
-import { jwtDecode } from 'jwt-decode';
+import { getUserIdFromTokenid } from '../decipheringToken';
 
 const ItemDetailScreenComponent = (props) => {
-
-  const getUserIdFromToken = () => {
-    if (!token) return null;
-    try {
-      const decoded = jwtDecode(token);
-      console.log(decoded);
-      return decoded['userId'];
-    } catch (error) {
-      console.error('Error decoding token:', error);
-      return null;
-    }
-  };
-
   const { currentItem } = props;
   const itemId = currentItem.id;
-  // const token = window.parent.sessionStorage.getItem('jwt')
-  const token = sessionStorage.getItem('jwt');
-  const userId = getUserIdFromToken();
+  const userId = getUserIdFromTokenid();
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,14 +36,15 @@ const ItemDetailScreenComponent = (props) => {
     fetchData();
   }, []);
 
-  
+
   const updateRatingNote = async (type, value) => {
     const thisRatingNote = {
       ratingNoteId: 0,
       userId,
       itemId,
       rating: initialRating ?? 0,
-      note: noteText ?? ''
+      note: noteText ?? '',
+      savedItem: null,
     }
     if (type === 'rating') {
       setInitialRating(value ?? 0);
@@ -87,15 +73,15 @@ const ItemDetailScreenComponent = (props) => {
         </Grid>
         <div style={{ maxWidth: '318px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
           {loading ? (
-            <div style={{maxWidth: '318px'}}>
-            <Box style={{width:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 60 }}>
-              <CircularProgress />
-            </Box></div>
+            <div style={{ maxWidth: '318px' }}>
+              <Box style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 60 }}>
+                <CircularProgress />
+              </Box></div>
           ) : (
             <>
-              {initialRating !== null && <Box width="100%" marginBottom={2}>
-                <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />
-              </Box>}
+              <Box width="100%" marginBottom={2} >
+                {initialRating !== null && <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />}
+              </Box>
               {noteText !== null && <Box width="100%" marginBottom={2}>
                 <NoteComponent noteText={noteText} setNoteText={setNoteText} updateRatingNote={updateRatingNote} />
               </Box>}

@@ -4,7 +4,7 @@ import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack';
 import ItemsPage from './ItemsPage';
 
-const PaginatedItemsPage = ({ items, itemsPerPage = 8 }) => {
+const PaginatedItemsPage = ({ items, refresh , itemsPerPage = 8 }) => {
   const [page, setPage] = useState(1);
 
   const pageCount = Math.ceil(items.length / itemsPerPage);
@@ -35,7 +35,7 @@ const PaginatedItemsPage = ({ items, itemsPerPage = 8 }) => {
           />
         )}
       </Stack>
-      <ItemsPage items={selectedItems} />
+      <ItemsPage items={selectedItems} refresh={refresh} />
     </Stack>
   );
 };
