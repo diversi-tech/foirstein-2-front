@@ -4,9 +4,39 @@ import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen'
 import axios from 'axios';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 import { dark } from '@mui/material/styles/createPalette';
+import SavedItemComponent from './SavedItem';
+import { getUserIdFromTokenid } from '../decipheringToken';
 
-const Item = ({ item }) => {
+const Item = ({ item , refresh,isSaved,changeSavedItems}) => {
     const [expanded, setExpanded] = useState(false);
+    const userId = getUserIdFromTokenid();
+    const apiUrl = process.env.REACT_APP_SERVER_URL;
+
+    const updateSavedItem = async (isSave) => {
+        const thisRatingNote = {
+          ratingNoteId: 0,
+          userId,
+          itemId:item.id,
+          rating: null,
+          note: null,
+          savedItem: isSave,
+        }
+        console.log(thisRatingNote);
+        const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+         changeSavedItems();
+          console.log('save item updated successfully');
+          if (refresh&&!isSave) {
+            refresh(item.id);
+          }
+        } else {
+          throw new Error('Failed to update rating & note');
+        }
+      };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -69,6 +99,7 @@ const Item = ({ item }) => {
                     <Typography variant="body2" width={"15%"}>
                         תאריך עדכון: {formatDateFromISO(item.createdAt)}
                     </Typography>
+                    <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
                     <Button
                         width={"10%"}
                         size="small"
