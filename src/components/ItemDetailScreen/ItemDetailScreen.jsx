@@ -43,7 +43,8 @@ const ItemDetailScreenComponent = (props) => {
       userId,
       itemId,
       rating: initialRating ?? 0,
-      note: noteText ?? ''
+      note: noteText ?? '',
+      savedItem: null,
     }
     if (type === 'rating') {
       setInitialRating(value ?? 0);
@@ -78,9 +79,9 @@ const ItemDetailScreenComponent = (props) => {
               </Box></div>
           ) : (
             <>
-              {initialRating !== null && <Box width="100%" marginBottom={2}>
-                <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />
-              </Box>}
+              <Box width="100%" marginBottom={2} >
+                {initialRating !== null && <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />}
+              </Box>
               {noteText !== null && <Box width="100%" marginBottom={2}>
                 <NoteComponent noteText={noteText} setNoteText={setNoteText} updateRatingNote={updateRatingNote} />
               </Box>}
