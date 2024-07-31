@@ -117,6 +117,11 @@ export const Nav = () => {
         console.log("StatusListView")
 
     handleMenuClose();
+  }; 
+  
+  const handleProfileClickSavedItemsScreen = () => {
+    navigate('/SavedItemsScreen');
+    handleMenuClose();
   };
   
   const handleProfileClick = () => {
@@ -283,6 +288,7 @@ export const Nav = () => {
                 >
                   <MenuItem onClick={handleProfileClick}>ניהול חשבון</MenuItem>
                   <MenuItem onClick={handleProfileClickToRequestStatus}>רשימת השאלות</MenuItem>
+                  <MenuItem onClick={handleProfileClickSavedItemsScreen}>מאגר אישי </MenuItem>
                   <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
               </>

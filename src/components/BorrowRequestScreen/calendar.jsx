@@ -49,7 +49,6 @@ export default function CustomDateRangePicker({ borrowRequest, setBorrowRequest,
         } else {
           setSelectedRange([null, null]);
           
-          alert(righatDate,"righatDate")
           alert(`Please select a date range within ${maxDateRange} days.`);
         }
       }
