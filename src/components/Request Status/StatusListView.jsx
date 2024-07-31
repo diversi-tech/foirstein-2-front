@@ -40,7 +40,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import RequestDetails from './RequestDetails'; // ייבוא הקומפוננטה
 import CloseIcon from '@mui/icons-material/Close';
-import {  getUserIdFromTokenid } from '../decipheringToken';
+//import {  getUserIdFromTokenid } from '../decipheringToken';
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -94,8 +94,9 @@ const StatusListView = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [processedRequests, setProcessedRequests] = useState([]);
   const apiUrl = process.env.REACT_APP_SERVER_URL;
-  const currentUser = getUserIdFromTokenid();
-  
+  //const currentUser = getUserIdFromTokenid();
+  const currentUser = 1;
+
   const isMediumScreen = useMediaQuery(theme.breakpoints.up('md'));
   const isSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
