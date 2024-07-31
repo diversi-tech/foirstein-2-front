@@ -36,8 +36,14 @@ const ItemsList = ({ type }) => {
       filteredItems = initialItems.filter(item => item.isApproved);
       setVisibleItems(filteredItems.slice(0, 4));
     } else if (type === 'popular') {
-      filteredItems = initialItems.filter(item => item.isApproved);
-      setVisibleItems(filteredItems.slice(0, 4));
+      axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/MostRequested')
+        .then(response => {
+          setVisibleItems(response.data.slice(0, 4));
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching recommended items:', error);
+        });
     } else if (type === 'recommended') {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
         .then(response => {
@@ -52,9 +58,18 @@ const ItemsList = ({ type }) => {
 
   const handleShowMore = () => {
     setShowAll(!showAll);
-    if (type === 'recent' || type === 'popular') {
+    if (type === 'recent') {
       setVisibleItems(showAll ? initialItems.filter(item => item.isApproved).slice(0, 4) : initialItems.filter(item => item.isApproved));
-    } else if (type === 'recommended') {
+    } else if (type === 'popular'){
+      axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/MostRequested')
+      .then(response => {
+        setVisibleItems(showAll ? response.data.slice(0, 4) : response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching recommended items:', error);
+      });
+    }
+    else if (type === 'recommended') {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
         .then(response => {
           setVisibleItems(showAll ? response.data.slice(0, 4) : response.data);
