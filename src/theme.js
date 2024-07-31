@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material/styles';
 // קובץ העיצוב הכללי לאתר עם הגדרות רספונסיביות
 const theme = createTheme({
   typography: {
+    
     fontFamily: [
       'Roboto',
       '"Helvetica Neue"',
