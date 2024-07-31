@@ -15,3 +15,18 @@ export const AddBorrowRequest = async (borrowRequest) => {
         console.log(e)
     }
 }
+export const GetBorrowRequestsAndApprovalsByItemId = async (ItemId) => {
+    try
+    {
+        ItemId=2;
+        let data = await axios.get(`${urlService}GetBorrowRequestsAndApprovalsByItemId/${ItemId}`)
+        if (data)
+        {
+            return data.data
+        }
+    }
+    catch (e)
+    {
+        console.log(e)
+    }
+}
