@@ -25,7 +25,7 @@ export const Routing = () => {
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
-        <Route path="/SearchAppBar" element={<ExternalRedirect url="https://search.foirstein.diversitech.co.il/#/AllSearchScreen" />} />
+        <Route path="/" element={<AllSearchScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
         <Route path='/Charts' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Charts" />} />
         <Route path='/changePermission' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/changePermission" />} />
