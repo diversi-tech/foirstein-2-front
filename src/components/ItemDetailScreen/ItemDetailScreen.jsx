@@ -22,8 +22,8 @@ const ItemDetailScreenComponent = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/RatingNote/GetRatingNote/${userId}/${itemId}`);
-        setInitialRating(response.data.rating);
-        setNoteText(response.data.note);
+        setInitialRating(response.data.rating??0);
+        setNoteText(response.data.note??'');
         setLoading(false);
       } catch (error) {
         setInitialRating(0);
