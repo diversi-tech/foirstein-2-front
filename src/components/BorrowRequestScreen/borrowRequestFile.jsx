@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dialog, ButtonGroup } from '@mui/material';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useSelector } from 'react-redux';
-import { AddBorrowRequest } from "../../utils/borrowRequestService"
+import { AddBorrowRequest, GetBorrowRequestsAndApprovalsByItemId } from "../../utils/borrowRequestService"
 import CustomDateRangePicker from "./calendar"
+import DateRangePickerExample from './TestReact';
+import "./dateRangePickker.css"
 
 export default function BorrowRequestFile({ currentItem, isApproved }) {
     const currentUser = useSelector(state => state.userReducer.currentUser);
@@ -19,6 +21,7 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
         requestId: 0,
         itemId: 0,
         userId: currentUserId,
+        isWaiting: false,
         requestDate: currentDate.toISOString(),
         approvalDate: null,
         fromDate: fromDate.toISOString(),
@@ -26,6 +29,28 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
         TotalPrice: 0,
         requestStatus: 0
     });
+    const [i, setI] = useState([]);
+    const [iApproval, setIApproval] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fetchedData = await GetBorrowRequestsAndApprovalsByItemId(2);
+                if (fetchedData.borrowRequests.length > 0) {
+                    setI(fetchedData.borrowRequests);
+                }
+                if (fetchedData.borrowApprovalRequests.length > 0) {
+                    setIApproval(fetchedData.borrowApprovalRequests);
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                // setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -48,11 +73,18 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
                                 <div>{currentItem.TotalPrice}</div>
                             </>
                         )}
-                        <CustomDateRangePicker borrowRequest={borrowRequest} setBorrowRequest={setBorrowRequest} righatDate={righatDate} setRighatDate={setRighatDate}></CustomDateRangePicker>
+                        <DateRangePickerExample borrowRequest={borrowRequest} setBorrowRequest={setBorrowRequest} righatDate={righatDate} setRighatDate={setRighatDate} i={i} setI={setI} iApproval={iApproval} setIApproval={setIApproval}></DateRangePickerExample>
+                        {/* <CustomDateRangePicker borrowRequest={borrowRequest} setBorrowRequest={setBorrowRequest} righatDate={righatDate} setRighatDate={setRighatDate}></CustomDateRangePicker> */}
                         <br /><br />
                         <div className='submit' style={{ marginLeft: 5 }}>
+
                             <ButtonGroup>
-                                {righatDate && <Button style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => { setOpen(false); AddBorrowRequest(borrowRequest); }}>אישור</Button>}
+                                <Button className={!righatDate ? 'disabled-button' : ''} // Apply the 'disabled-button' class if the button is disabled
+
+                                    disabled={!righatDate} style={{ color: 'white', backgroundColor: '#0D1E46', marginBottom: '4px' }} onClick={() => {
+                                        setOpen(false);
+                                        AddBorrowRequest(borrowRequest);
+                                    }}>אישור</Button>
                             </ButtonGroup>
                         </div>
                     </div>
