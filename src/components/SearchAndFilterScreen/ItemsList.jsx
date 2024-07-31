@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Button, Typography, Box } from '@mui/material';
 import ItemCard from './ItemCard';
+import axios from 'axios';
 
 const initialItems = [
   { id: 1, title: 'Item 1', author: 'Author 1', category: 'Category 1', description: 'Description 1', createdAt: '2023-01-01', updatedAt: '2023-01-02', isApproved: true, recommended: true },
@@ -32,23 +33,35 @@ const ItemsList = ({ type }) => {
   useEffect(() => {
     let filteredItems = initialItems;
     if (type === 'recent') {
-      filteredItems = initialItems.filter(item => item.isApproved); // רק פריטים מאושרים
+      filteredItems = initialItems.filter(item => item.isApproved);
+      setVisibleItems(filteredItems.slice(0, 4));
     } else if (type === 'popular') {
-      filteredItems = initialItems.filter(item => item.isApproved); // רק פריטים מאושרים
+      filteredItems = initialItems.filter(item => item.isApproved);
+      setVisibleItems(filteredItems.slice(0, 4));
     } else if (type === 'recommended') {
-      filteredItems = initialItems.filter(item => item.recommended); // רק פריטים מומלצים
+      axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
+        .then(response => {
+          setVisibleItems(response.data.slice(0, 4));
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching recommended items:', error);
+        });
     }
-    setVisibleItems(filteredItems.slice(0, 4));
   }, [type]);
 
   const handleShowMore = () => {
     setShowAll(!showAll);
-    if (type === 'recent') {
-      setVisibleItems(showAll ? initialItems.filter(item => item.isApproved).slice(0, 4) : initialItems.filter(item => item.isApproved));
-    } else if (type === 'popular') {
+    if (type === 'recent' || type === 'popular') {
       setVisibleItems(showAll ? initialItems.filter(item => item.isApproved).slice(0, 4) : initialItems.filter(item => item.isApproved));
     } else if (type === 'recommended') {
-      setVisibleItems(showAll ? initialItems.filter(item => item.recommended).slice(0, 4) : initialItems.filter(item => item.recommended));
+      axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
+        .then(response => {
+          setVisibleItems(showAll ? response.data.slice(0, 4) : response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching recommended items:', error);
+        });
     }
   };
 

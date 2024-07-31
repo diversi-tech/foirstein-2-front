@@ -1,7 +1,6 @@
 import SearchAppBar from "./Search";
 import PaginatedItemsPage from "./PaginationItems";
 import ItemsList from "./ItemsList";
-import TheRecommended from "./theRecommended";
 import { useEffect, useState } from "react";
 import { Stack } from "@mui/material";
 
@@ -29,17 +28,15 @@ function AllSearchScreen() {
         <SearchAppBar />
       </Stack>
       {items.length <= 0 ? (
-      <>
-        <TheRecommended />
-        <PaginatedItemsPage items={items} />
+      <> 
+      <ItemsList type="recent" />
+      <ItemsList type="popular" />
+      <ItemsList type="recommended" />
         </>
       ) : (
       <PaginatedItemsPage items={items} />
       )}
-      
-      <ItemsList type="recent" />
-      <ItemsList type="popular" />
-      <ItemsList type="recommended" />
+
     </>
   );
 }
