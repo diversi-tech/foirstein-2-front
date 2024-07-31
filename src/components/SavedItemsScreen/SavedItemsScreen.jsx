@@ -5,10 +5,11 @@ import Typography from '@mui/material/Typography';
 import SortingComponent from './sort';
 import Rtl from '../ItemDetailScreen/Rtl';
 import { useTheme } from '@mui/material/styles';
-import { getUserIdFromTokenid } from '../decipheringToken';
+//import { getUserIdFromTokenid } from '../decipheringToken';
 
 function SavedItemsScreen() {
-    const userId = getUserIdFromTokenid();
+    //   const userId = getUserIdFromTokenid();
+    const userId = 1;
     const apiUrl = process.env.REACT_APP_SERVER_URL;
     const [items, setItems] = useState(null);
     const theme = useTheme();

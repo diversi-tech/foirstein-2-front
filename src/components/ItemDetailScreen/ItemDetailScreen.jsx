@@ -7,12 +7,13 @@ import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
 import Rtl from './Rtl'
 import { CircularProgress } from '@mui/material';
-import { getUserIdFromTokenid } from '../decipheringToken';
+//import { getUserIdFromTokenid } from '../decipheringToken';
 
 const ItemDetailScreenComponent = (props) => {
   const { currentItem } = props;
   const itemId = currentItem.id;
-  const userId = getUserIdFromTokenid();
+  //const userId = getUserIdFromTokenid();
+  const userId = 1;
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
   const [loading, setLoading] = useState(true);
