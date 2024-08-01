@@ -1,4 +1,4 @@
-import SearchAppBar from "./Search";
+import SearchBarApp from "./Search";
 import PaginatedItemsPage from "./PaginationItems";
 import ItemsList from "./ItemsList";
 import { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ function AllSearchScreen() {
   return (
     <>
       <Stack>
-        <SearchAppBar />
+        <SearchBarApp />
       </Stack>
       {items.length <= 0 ? (
       <> 
