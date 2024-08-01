@@ -24,6 +24,7 @@ export const Routing = () => {
       <Nav/>
      
       <Routes>
+        <Route path="/" element={<AllSearchScreen />} />
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
