@@ -89,7 +89,7 @@ export const Nav = () => {
 
   useEffect(() => {
     if (!isLoggedIn && (location.pathname === '/UserManagementComponent' || location.pathname === '/ActivityLog' || location.pathname === '/changePermission' || location.pathname === '/Charts')) {
-      navigate('/home');
+      navigate('/SearchAppBar');
     }
   }, [isLoggedIn, location.pathname, navigate]);
 
@@ -100,7 +100,7 @@ export const Nav = () => {
   const handleLogout = () => {
     document.cookie = `jwt=; path=/; domain=.foirstein.diversitech.co.il; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
     setIsLoggedIn(false);
-    navigate('/home');
+    navigate('/SearchAppBar');
     console.log('Logging out...');
   };
 
@@ -177,7 +177,7 @@ export const Nav = () => {
             </StyledLink>
           )}
           {isLoggedIn && (
-            <StyledLink to="/search" active={location.pathname === '/search'}>
+            <StyledLink to="/SearchAppBar" active={location.pathname === '/SearchAppBar'}>
               חיפוש
             </StyledLink>)
             
