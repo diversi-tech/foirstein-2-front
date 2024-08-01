@@ -89,7 +89,7 @@ export const Nav = () => {
 
   useEffect(() => {
     if (!isLoggedIn && (location.pathname === '/UserManagementComponent' || location.pathname === '/ActivityLog' || location.pathname === '/changePermission' || location.pathname === '/Charts')) {
-      navigate('/SearchAppBar');
+      navigate('/home');
     }
   }, [isLoggedIn, location.pathname, navigate]);
 
@@ -100,7 +100,7 @@ export const Nav = () => {
   const handleLogout = () => {
     document.cookie = `jwt=; path=/; domain=.foirstein.diversitech.co.il; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
     setIsLoggedIn(false);
-    navigate('/SearchAppBar');
+    navigate('/home');
     console.log('Logging out...');
   };
 
@@ -168,9 +168,6 @@ export const Nav = () => {
               מרחבית
             </Typography>
           </RightSection>
-          <StyledLink to="/homePage" active={location.pathname === '/homePage' || location.pathname === '/login/homePage' || location.pathname === '/homePage'}>
-            דף הבית
-          </StyledLink>
           {!isLoggedIn && (
             <StyledLink to="/login" active={location.pathname === '/login' || location.pathname === '/login/security-question/reset-password/password-reset-success/login'}>
               התחברות
