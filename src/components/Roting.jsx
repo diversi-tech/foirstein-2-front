@@ -25,8 +25,7 @@ export const Routing = () => {
      
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
-        <Route path="/" element={<AllSearchScreen />} />
-{/*         <Route path="/SearchAppBar" element={<AllSearchScreen />} /> */}
+        <Route path="/SearchAppBar" element={<AllSearchScreen />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
         <Route path='/Charts' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Charts" />} />
@@ -42,7 +41,7 @@ export const Routing = () => {
         <Route path='login/security-question' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='/reset-password' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='/password-reset-success' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
-        <Route path='login/security-question/reset-password/password-reset-success/logi' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
+        <Route path='login/security-question/reset-password/password-reset-success/login' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='login/security-question/reset-password/password-reset-success/login/home' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='/passwordRecovery' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/login" />} />
         <Route path='/items' element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/items" />} />
