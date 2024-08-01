@@ -25,6 +25,7 @@ export const Routing = () => {
      
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
+        <Route path="/" element={<AllSearchScreen />} />
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
