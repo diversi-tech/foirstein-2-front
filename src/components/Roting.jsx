@@ -14,7 +14,7 @@ import SavedItemsScreen from "./SavedItemsScreen/SavedItemsScreen";
 function ExternalRedirect({ url }) {
   useEffect(() => {
     window.location.href = url;
-  }, []);
+  }, [url]);
   return null;
 }
 
