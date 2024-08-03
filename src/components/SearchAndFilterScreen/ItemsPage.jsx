@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { List } from '@mui/material';
 import Item from './Item';
 import axios from 'axios';
-//import { getUserIdFromTokenid } from '../decipheringToken';
+import { getUserIdFromTokenid } from '../decipheringToken';
 
 const ItemsPage = ({ items, refresh }) => {
- // const userId = getUserIdFromTokenid();
- const userId = 1;
+ const userId = getUserIdFromTokenid();
   const apiUrl = process.env.REACT_APP_SERVER_URL;
   const [savedItems, setSavedItems] = useState([]);
 
