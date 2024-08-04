@@ -6,37 +6,15 @@ import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 import { dark } from '@mui/material/styles/createPalette';
 import SavedItemComponent from './SavedItem';
 import { getUserIdFromTokenid } from '../decipheringToken';
+import { updateSavedItemFunction } from '../../utils/SavedItemsService';
 
-const Item = ({ item , refresh,isSaved,changeSavedItems}) => {
+const Item = ({ item, refresh, isSaved, changeSavedItems }) => {
     const [expanded, setExpanded] = useState(false);
-   const userId = getUserIdFromTokenid();
-    const apiUrl = process.env.REACT_APP_SERVER_URL;
+    const userId = getUserIdFromTokenid();
 
     const updateSavedItem = async (isSave) => {
-        const thisRatingNote = {
-          ratingNoteId: 0,
-          userId,
-          itemId:item.id,
-          rating: null,
-          note: null,
-          savedItem: isSave,
-        }
-        console.log(thisRatingNote);
-        const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.status === 200) {
-         changeSavedItems();
-          console.log('save item updated successfully');
-          if (refresh&&!isSave) {
-            refresh(item.id);
-          }
-        } else {
-          throw new Error('Failed to update rating & note');
-        }
-      };
+        updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh)
+    };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
