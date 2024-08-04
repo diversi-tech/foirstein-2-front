@@ -75,7 +75,8 @@ export default function ItemDetailsDisplay(props) {
     float: 'right',
     marginTop: '3vh'
   };
-
+  const AlternateBackgroundColor = 0;
+  // index % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <List id="itemPropertiesList" sx={style} aria-label="mailbox folders">
@@ -83,7 +84,8 @@ export default function ItemDetailsDisplay(props) {
           const labelId = `checkbox-list-label-${index}`;
           const propertyLabel = itemProperties[key];
           if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount' || value === undefined) return null; // לא להציג את מה שלא רוצים להציג
-          const AlternateBackgroundColor = index % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
+          AlternateBackgroundColor %2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
+          AlternateBackgroundColor ++;
           return (
             <React.Fragment key={key}>
               <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px', backgroundColor : AlternateBackgroundColor }}>
@@ -124,7 +126,7 @@ export default function ItemDetailsDisplay(props) {
                   </div>
                 </ListItemText>
               </ListItem>
-              {key !== 'itemType' && <Divider component="li" />}
+              {/* {key !== 'itemType' && <Divider component="li" />} */}
             </React.Fragment>
           );
         })}
