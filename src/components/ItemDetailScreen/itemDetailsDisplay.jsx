@@ -46,6 +46,20 @@ export default function ItemDetailsDisplay(props) {
     isApproved: 'זמין להשאלה',
     createdAt: 'תאריך יצירה',
     updatedAt: 'עדכון אחרון',
+    publishingYear:'שנת הוצאה לאור',
+    edition:'מהדורה',
+    series:'סדרה',
+    numOfSeries:'מספר בסדרה',
+    language:'שפה',
+    note:'הערה',
+    accompanyingMaterial:'חומר נלווה',
+    itemLevel:'מתאים לרמה',
+    hebrewPublicationYear:'שנת הוצאה עברית',
+    numberOfDaysOfQuestion:'מספר ימי השאלה',
+    recommended:'מומלץ',
+    userId:'מזהה משתמש',
+    amount:'כמות',
+    itemType:'סוג פריט',
     // price: 'מחיר'
   };
 
@@ -68,7 +82,7 @@ export default function ItemDetailsDisplay(props) {
         {Object.entries(currentItem).map(([key, value], index) => {
           const labelId = `checkbox-list-label-${index}`;
           const propertyLabel = itemProperties[key];
-          if (key === 'title') return null; // לא להציג את הכותרת
+          if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount') return null; // לא להציג את מה שלא רוצים להציג
           return (
             <React.Fragment key={key}>
               <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px' }}>
