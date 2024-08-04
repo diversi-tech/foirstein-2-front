@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Box, Typography, alpha } from '@mui/material';
-import theme from '../../theme';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { getUserIdFromTokenid } from '../decipheringToken';
 
 const AdvancedSearch = () => {
   // State variables to manage form inputs
@@ -12,8 +11,7 @@ const AdvancedSearch = () => {
   const [category, setCategory] = useState("");
   const [createdAt, setCreatedAt] = useState("0001-01-01");
 
-  const currentUser = useSelector(state => state.userReducer.userId);
-  const userId = currentUser ? currentUser.userId : 1;
+  const userId = getUserIdFromTokenid();
 
   let item = {}
   let searchLog = {}

@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import { Stack } from '@mui/material';
 import AdvancedSearch from './AdvancedSearch';
-import { useSelector } from 'react-redux';
+import { getUserIdFromTokenid } from '../decipheringToken';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,8 +46,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchBarApp() {
   const [searchValue, setSearchValue] = useState('');
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
-  const currentUser = useSelector(state => state.userReducer.userId);
-  const userId = currentUser ? currentUser.userId : 1;
+  const userId = getUserIdFromTokenid() ? getUserIdFromTokenid() : 1;
 
   let searchLog = {}
 
