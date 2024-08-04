@@ -22,7 +22,7 @@ const ItemsPage = ({ items, refresh }) => {
   return (
     <List>
       {items.map((item) => (
-        <Item key={item.id} item={item} refresh={refresh} isSaved={refresh || (isSavedItem(item))} changeSavedItems={changeSavedItems} />
+        <Item key={item.id} item={item} refresh={refresh} isSaved={isSavedItem(refresh, item, savedItems)} changeSavedItems={changeSavedItems} />
       ))}
     </List>
   );
