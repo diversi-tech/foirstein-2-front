@@ -123,7 +123,7 @@ export default function ItemDetailsDisplay(props) {
                   </div>
                 </ListItemText>
               </ListItem>
-              {key !== 'updatedAt' && <Divider component="li" />}
+              {key !== 'itemType' && <Divider component="li" />}
             </React.Fragment>
           );
         })}
