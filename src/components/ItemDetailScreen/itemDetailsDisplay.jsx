@@ -82,10 +82,11 @@ export default function ItemDetailsDisplay(props) {
         {Object.entries(currentItem).map(([key, value], index) => {
           const labelId = `checkbox-list-label-${index}`;
           const propertyLabel = itemProperties[key];
-          if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount') return null; // לא להציג את מה שלא רוצים להציג
+          if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount' || value === undefined) return null; // לא להציג את מה שלא רוצים להציג
+          const AlternateBackgroundColor = index % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
           return (
             <React.Fragment key={key}>
-              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px' }}>
+              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px', backgroundColor : AlternateBackgroundColor }}>
                 <ListItemText
                   id={labelId}
                   sx={{ textAlign: 'right', height: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
