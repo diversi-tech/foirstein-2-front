@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Button, Typography, Box } from '@mui/material';
 import ItemCard from './ItemCard';
 import axios from 'axios';
+import { getUserIdFromTokenid } from '../decipheringToken';
+import { fetchData, isSavedItem } from '../../utils/SavedItemsService';
 
 const initialItems = [
   { id: 1, title: 'Item 1', author: 'Author 1', category: 'Category 1', description: 'Description 1', createdAt: '2023-01-01', updatedAt: '2023-01-02', isApproved: true, recommended: true },
@@ -26,9 +28,22 @@ const initialItems = [
   { id: 20, title: 'Item 20', author: 'Author 20', category: 'Category 20', description: 'Description 20', createdAt: '2023-01-01', updatedAt: '2023-01-02', isApproved: true, recommended: false },
 ];
 
-const ItemsList = ({ type }) => {
+const ItemsList = ({ type, refresh }) => {
   const [visibleItems, setVisibleItems] = useState([]);
   const [showAll, setShowAll] = useState(false);
+  const userId = getUserIdFromTokenid();
+  const [savedItems, setSavedItems] = useState([]);
+
+  useEffect(() => {
+    const fetch = async() => {
+      await fetchData(userId, setSavedItems);
+    };
+    fetch();
+  }, []);
+
+  const changeSavedItems = () => {
+    fetchData(userId, setSavedItems);
+  };
 
   useEffect(() => {
     let filteredItems = initialItems;
@@ -58,14 +73,14 @@ const ItemsList = ({ type }) => {
     setShowAll(!showAll);
     if (type === 'recent') {
       setVisibleItems(showAll ? initialItems.filter(item => item.isApproved).slice(0, 4) : initialItems.filter(item => item.isApproved));
-    } else if (type === 'popular'){
+    } else if (type === 'popular') {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/MostRequested')
-      .then(response => {
-        setVisibleItems(showAll ? response.data.slice(0, 4) : response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching recommended items:', error);
-      });
+        .then(response => {
+          setVisibleItems(showAll ? response.data.slice(0, 4) : response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching recommended items:', error);
+        });
     }
     else if (type === 'recommended') {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
@@ -80,22 +95,22 @@ const ItemsList = ({ type }) => {
 
   return (
     <div style={{ width: '66.66%', margin: 'auto' }}>
-      <Box 
-        sx={{ 
-          display: 'flex', 
+      <Box
+        sx={{
+          display: 'flex',
           flexDirection: 'column',
-          marginBottom: '16px' 
+          marginBottom: '16px'
         }}
       >
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center' 
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}
         >
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={handleShowMore}
             style={{ marginLeft: '16px' }}
           >
@@ -118,7 +133,7 @@ const ItemsList = ({ type }) => {
       <Grid container spacing={2}>
         {visibleItems.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={item.id}>
-            <ItemCard item={item} />
+            <ItemCard item={item} refresh={refresh} isSaved={isSavedItem(refresh, item, savedItems)} changeSavedItems={changeSavedItems} />
           </Grid>
         ))}
       </Grid>
