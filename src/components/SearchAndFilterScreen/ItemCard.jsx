@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, Button, Collapse, Divider, CardActions } from '@mui/material';
 import { styled } from '@mui/system';
 import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
+import SavedItemComponent from './SavedItem';
+import { getUserIdFromTokenid } from '../decipheringToken';
+import { updateSavedItemFunction } from '../../utils/SavedItemsService';
 
 // עיצוב כרטיס הפריט
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -20,9 +23,14 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   direction: 'rtl', // הוספת כיוון ימין לשמאל
 }));
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const userId = getUserIdFromTokenid();
+
+  const updateSavedItem = async (isSave) => {
+    updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh)
+  };
 
   const handleToggleDetails = () => {
     if (showDetails) {
@@ -55,6 +63,7 @@ const ItemCard = ({ item }) => {
           >
             {showDetails ? 'פחות מידע' : 'מידע נוסף'}
           </Button>
+          <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
         </CardActions>
         <Collapse in={showDetails}>
           <CardContent>
