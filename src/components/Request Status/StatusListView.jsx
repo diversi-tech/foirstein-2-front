@@ -196,7 +196,10 @@ const StatusListView = () => {
     const daysOverdue = Math.floor((currentDate - untilDate) / (1000 * 60 * 60 * 24)); // חישוב מספר הימים שעברו
     const itemTitle = itemList.find(item => item.id === row.itemId)?.title || 'טוען...'; // מציאת שם המוצר
 
+    const [write, setwrite] = useState("")
     if (untilDate < currentDate && !row.isReturned && !closedAlerts[row.requestId]) {
+     
+      setwrite(` הפריט ${itemTitle} עדיין לא הוחזר. עברו ${daysOverdue} ימים ! . `)
       return (
         <Collapse in={!closedAlerts[row.requestId]}>
           <Alert
@@ -204,7 +207,7 @@ const StatusListView = () => {
             variant="filled"
             style={{ marginBottom: '20px', backgroundColor: '#ffcccc', color: '#b20000', direction: 'rtl' }}
           >
-            {` הפריט ${itemTitle} עדיין לא הוחזר. עברו ${daysOverdue} ימים ! . `}
+            {{ write }}
           </Alert>
 
         </Collapse>
