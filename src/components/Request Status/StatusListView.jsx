@@ -199,7 +199,7 @@ const StatusListView = () => {
     const [write, setwrite] = useState("")
     if (untilDate < currentDate && !row.isReturned && !closedAlerts[row.requestId]) {
      
-      setwrite(` הפריט ${itemTitle} עדיין לא הוחזר. עברו ${daysOverdue} ימים ! . `)
+      setwrite(`🙅 הפריט ${itemTitle} עדיין לא הוחזר. עברו ${daysOverdue} ימים ! . `)
       return (
         <Collapse in={!closedAlerts[row.requestId]}>
           <Alert
