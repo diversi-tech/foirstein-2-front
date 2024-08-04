@@ -57,7 +57,6 @@ const Item = ({ item , refresh,isSaved,changeSavedItems}) => {
             if (isNaN(search)) {
                 response = await axios.get('http://localhost:5135/api/Item/ReadByCategory/' + search);
             } else {
-                console.log(search);
                 response = await axios.get('http://localhost:5135/api/Item/ReadByTag/' + search);
             }
             if (response.status === 200) {

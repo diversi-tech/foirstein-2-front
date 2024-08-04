@@ -37,7 +37,6 @@ const AdvancedSearch = () => {
       "searchQuery": `Title: ${title} Author: ${author} Description: ${description} Category: ${category} Created At: ${createdAt}`,
       "searchDate": new Date().toISOString()
     }
-    console.log('Form submitted:', { title, author, description, category, createdAt });
     getAdvancedSearchResult()
   };
 

@@ -39,7 +39,6 @@ const ItemsList = ({ type }) => {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/MostRequested')
         .then(response => {
           setVisibleItems(response.data.slice(0, 4));
-          console.log(response.data);
         })
         .catch(error => {
           console.error('Error fetching recommended items:', error);
@@ -48,7 +47,6 @@ const ItemsList = ({ type }) => {
       axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/ReadTheRecommended')
         .then(response => {
           setVisibleItems(response.data.slice(0, 4));
-          console.log(response.data);
         })
         .catch(error => {
           console.error('Error fetching recommended items:', error);
