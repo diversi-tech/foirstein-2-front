@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, Button, Collapse } from '@mui/material';
-import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen'
+import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
 import axios from 'axios';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 import { dark } from '@mui/material/styles/createPalette';
@@ -10,15 +10,22 @@ import { updateSavedItemFunction } from '../../utils/SavedItemsService';
 
 const Item = ({ item, refresh, isSaved, changeSavedItems }) => {
     const [expanded, setExpanded] = useState(false);
+    const [fullScreen, setFullScreen] = useState(false);
     const userId = getUserIdFromTokenid();
 
     const updateSavedItem = async (isSave) => {
-        updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh)
+        updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh);
     };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+        setFullScreen(!fullScreen);
     };
+
+    const handleCloseDetails = () => {
+        setExpanded(false);
+        setFullScreen(false);
+      };
 
     const formatDateFromISO = (dateString) => {
         const dateObj = new Date(dateString);
@@ -76,7 +83,7 @@ const Item = ({ item, refresh, isSaved, changeSavedItems }) => {
                     <Typography variant="body2" width={"15%"}>
                         תאריך עדכון: {formatDateFromISO(item.createdAt)}
                     </Typography>
-                    <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
+                    <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved} />
                     <Button
                         width={"10%"}
                         size="small"
@@ -98,7 +105,7 @@ const Item = ({ item, refresh, isSaved, changeSavedItems }) => {
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Box sx={{ marginTop: 2 }}>
-                        {expanded && <ItemDetailScreenComponent currentItem={item} onSelected={onSelected} />}
+                        {expanded && <ItemDetailScreenComponent currentItem={item} onSelected={onSelected} viewProps={fullScreen} onClose={handleCloseDetails} />}
                     </Box>
                 </Collapse>
             </Box>

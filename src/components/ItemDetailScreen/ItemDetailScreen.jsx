@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Dialog, CircularProgress } from '@mui/material';
 import NoteComponent from './Note';
 import RatingComponent from './Rating';
 import SearchSimilarItems from './searchSimilarItems';
 import ItemDetailsDisplay from './itemDetailsDisplay';
 import axios from 'axios';
-import Rtl from './Rtl'
-import { CircularProgress } from '@mui/material';
+import Rtl from './Rtl';
 import { getUserIdFromTokenid } from '../decipheringToken';
+import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 
 const ItemDetailScreenComponent = (props) => {
-  const { currentItem } = props;
+  const { currentItem, onClose } = props;
   const itemId = currentItem.id;
   const userId = getUserIdFromTokenid();
   const [initialRating, setInitialRating] = useState(null);
@@ -22,8 +22,8 @@ const ItemDetailScreenComponent = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/RatingNote/GetRatingNote/${userId}/${itemId}`);
-        setInitialRating(response.data.rating??0);
-        setNoteText(response.data.note??'');
+        setInitialRating(response.data.rating ?? 0);
+        setNoteText(response.data.note ?? '');
         setLoading(false);
       } catch (error) {
         setInitialRating(0);
@@ -34,8 +34,7 @@ const ItemDetailScreenComponent = (props) => {
     };
 
     fetchData();
-  }, []);
-
+  }, [apiUrl, itemId, userId]);
 
   const updateRatingNote = async (type, value) => {
     const thisRatingNote = {
@@ -45,7 +44,7 @@ const ItemDetailScreenComponent = (props) => {
       rating: initialRating ?? 0,
       note: noteText ?? '',
       savedItem: null,
-    }
+    };
     if (type === 'rating') {
       setInitialRating(value ?? 0);
       thisRatingNote.rating = value;
@@ -53,48 +52,79 @@ const ItemDetailScreenComponent = (props) => {
       setNoteText(value);
       thisRatingNote.note = value;
     }
-    const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 200) {
+        console.log('Rating & note updated successfully');
+      } else {
+        throw new Error('Failed to update rating & note');
       }
-    });
-    if (response.status === 200) {
-      console.log('Rating & note updated successfully');
-    } else {
-      throw new Error('Failed to update rating & note');
+    } catch (error) {
+      console.error('Error updating rating & note:', error);
     }
   };
 
   return (
-    <div dir='ltr'>
-      <Grid container justifyContent="center" sx={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center' }}>
+    <Dialog
+      sx={{ maxWidth: '90%', maxHeight: '90%' }} // Set maximum width and height for the dialog
+      open={props.viewProps}
+      onClose={onClose}
+      PaperProps={{
+        style: { maxWidth: '90%', maxHeight: '90%', width: '90%', height: '90%' }, // Ensure the Paper component takes up the full size
+      }}
+    >
+      <Grid container justifyContent="center" sx={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', height: '100%' }}>
         <Grid item xs={12} md={6} style={{ textAlign: 'right' }}>
           <ItemDetailsDisplay currentItem={currentItem} />
         </Grid>
-        <div style={{ maxWidth: '318px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+        <div style={{ maxWidth: '318px', height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
           {loading ? (
             <div style={{ maxWidth: '318px' }}>
               <Box style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 60 }}>
                 <CircularProgress />
-              </Box></div>
+              </Box>
+            </div>
           ) : (
             <>
-              <Box width="100%" marginBottom={2} >
-                {initialRating !== null && <RatingComponent initialRating={initialRating} setInitialRating={setInitialRating} updateRatingNote={updateRatingNote} />}
+              <Box width="100%" marginBottom={2}>
+                {initialRating !== null && (
+                  <RatingComponent
+                    initialRating={initialRating}
+                    setInitialRating={setInitialRating}
+                    updateRatingNote={updateRatingNote}
+                  />
+                )}
               </Box>
-              {noteText !== null && <Box width="100%" marginBottom={2}>
-                <NoteComponent noteText={noteText} setNoteText={setNoteText} updateRatingNote={updateRatingNote} />
-              </Box>}
+              {noteText !== null && (
+                <Box width="100%" marginBottom={2}>
+                  <NoteComponent
+                    noteText={noteText}
+                    setNoteText={setNoteText}
+                    updateRatingNote={updateRatingNote}
+                  />
+                </Box>
+              )}
               <Box width="100%" marginBottom={2}>
                 <Rtl>
-                  <SearchSimilarItems itemId={itemId} category={currentItem.category} onSelected={props.onSelected} />
+                  <SearchSimilarItems
+                    itemId={itemId}
+                    category={currentItem.category}
+                    onSelected={props.onSelected}
+                  />
                 </Rtl>
+              </Box>
+              <Box sx={{ width: '100%', alignItems: 'center' }}>
+                <BorrowRequestFile currentItem={currentItem} isApproved={true} />
               </Box>
             </>
           )}
         </div>
       </Grid>
-    </div>
+    </Dialog>
   );
 };
 
