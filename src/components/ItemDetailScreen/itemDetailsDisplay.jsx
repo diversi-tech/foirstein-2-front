@@ -46,6 +46,20 @@ export default function ItemDetailsDisplay(props) {
     isApproved: 'זמין להשאלה',
     createdAt: 'תאריך יצירה',
     updatedAt: 'עדכון אחרון',
+    publishingYear:'שנת הוצאה לאור',
+    edition:'מהדורה',
+    series:'סדרה',
+    numOfSeries:'מספר בסדרה',
+    language:'שפה',
+    note:'הערה',
+    accompanyingMaterial:'חומר נלווה',
+    itemLevel:'מתאים לרמה',
+    hebrewPublicationYear:'שנת הוצאה עברית',
+    numberOfDaysOfQuestion:'מספר ימי השאלה',
+    recommended:'מומלץ',
+    userId:'מזהה משתמש',
+    amount:'כמות',
+    itemType:'סוג פריט',
     // price: 'מחיר'
   };
 
@@ -61,17 +75,20 @@ export default function ItemDetailsDisplay(props) {
     float: 'right',
     marginTop: '3vh'
   };
-
+  const AlternateBackgroundColor = 0;
+  // index % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <List id="itemPropertiesList" sx={style} aria-label="mailbox folders">
         {Object.entries(currentItem).map(([key, value], index) => {
           const labelId = `checkbox-list-label-${index}`;
           const propertyLabel = itemProperties[key];
-          if (key === 'title') return null; // לא להציג את הכותרת
+       //   if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount' || value === undefined) return null; // לא להציג את מה שלא רוצים להציג
+          // AlternateBackgroundColor %2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
+          // AlternateBackgroundColor ++;
           return (
             <React.Fragment key={key}>
-              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px' }}>
+              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px', backgroundColor : AlternateBackgroundColor }}>
                 <ListItemText
                   id={labelId}
                   sx={{ textAlign: 'right', height: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
@@ -109,7 +126,7 @@ export default function ItemDetailsDisplay(props) {
                   </div>
                 </ListItemText>
               </ListItem>
-              {key !== 'updatedAt' && <Divider component="li" />}
+              {/* {key !== 'itemType' && <Divider component="li" />} */}
             </React.Fragment>
           );
         })}
