@@ -23,7 +23,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   direction: 'rtl',
 }));
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [fullScreen, setFullScreen] = useState(false);
