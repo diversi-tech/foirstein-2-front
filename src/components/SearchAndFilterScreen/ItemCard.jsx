@@ -3,6 +3,10 @@ import { Box, Card, CardContent, Typography, Button, Collapse, Divider, CardActi
 import { styled } from '@mui/system';
 import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
+import SavedItemComponent from './SavedItem';
+import { getUserIdFromTokenid } from '../decipheringToken';
+import { updateSavedItemFunction } from '../../utils/SavedItemsService';
+
 
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
@@ -23,6 +27,12 @@ const ItemCard = ({ item }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [fullScreen, setFullScreen] = useState(false);
+  const userId = getUserIdFromTokenid();
+  
+  const updateSavedItem = async (isSave) => {
+    updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh)
+  };
+
 
   const handleToggleDetails = () => {
     if (showDetails) {
@@ -62,6 +72,8 @@ const ItemCard = ({ item }) => {
           >
             {showDetails ? 'פחות מידע' : 'מידע נוסף'}
           </Button>
+          <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
+
           <Collapse in={!showDetails} sx={{width:'3%' , margin:'1%'}}>
             <BorrowRequestFile currentItem={item} isApproved={true} />
           </Collapse>
