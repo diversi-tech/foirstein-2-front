@@ -6,8 +6,8 @@ import { Stack } from "@mui/material";
 
 function AllSearchScreen() {
   const [items, setItems] = useState([]);
-  localStorage.setItem('SearchResult',JSON.stringify(items));
-  
+  localStorage.setItem('SearchResult', JSON.stringify(items));
+
   useEffect(() => {
     const fetchData = async () => {
       const storedResult = localStorage.getItem('SearchResult');
@@ -24,19 +24,18 @@ function AllSearchScreen() {
 
   return (
     <>
+      <SearchBarApp />
       <Stack>
-        <SearchBarApp />
+        {items.length <= 0 ? (
+          <>
+            <ItemsList type="recent" />
+            <ItemsList type="popular" />
+            <ItemsList type="recommended" />
+          </>
+        ) : (
+          <PaginatedItemsPage items={items} />
+        )}
       </Stack>
-      {items.length <= 0 ? (
-      <> 
-      <ItemsList type="recent" />
-      <ItemsList type="popular" />
-      <ItemsList type="recommended" />
-        </>
-      ) : (
-      <PaginatedItemsPage items={items} />
-      )}
-
     </>
   );
 }
