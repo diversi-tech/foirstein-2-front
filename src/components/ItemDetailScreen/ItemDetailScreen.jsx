@@ -8,6 +8,7 @@ import axios from 'axios';
 import Rtl from './Rtl';
 import { getUserIdFromTokenid } from '../decipheringToken';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
+import itemSuggestionsList from './itemSuggestionsList';
 
 const ItemDetailScreenComponent = (props) => {
   const { currentItem, onClose } = props;
@@ -120,6 +121,7 @@ const ItemDetailScreenComponent = (props) => {
               <Box sx={{ width: '100%', alignItems: 'center' }}>
                 <BorrowRequestFile currentItem={currentItem} isApproved={true} />
               </Box>
+              <itemSuggestionsList currentItem={currentItem}/>
             </>
           )}
         </div>
