@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, Button, Collapse, Divider, CardActions } from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, Collapse, Divider, CardActions } from '@mui/material';
 import { styled } from '@mui/system';
 import ItemDetailScreenComponent from '../ItemDetailScreen/ItemDetailScreen';
+import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
 import SavedItemComponent from './SavedItem';
 import { getUserIdFromTokenid } from '../decipheringToken';
 import { updateSavedItemFunction } from '../../utils/SavedItemsService';
 
-// עיצוב כרטיס הפריט
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
   marginBottom: theme.spacing(2),
@@ -14,20 +14,20 @@ const StyledCard = styled(Card)(({ theme }) => ({
   '&:hover': {
     boxShadow: theme.shadows[6],
   },
-  direction: 'rtl', // הוספת כיוון ימין לשמאל
+  direction: 'rtl',
 }));
 
-// עיצוב כותרת התוכן
 const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
-  direction: 'rtl', // הוספת כיוון ימין לשמאל
+  direction: 'rtl',
 }));
 
 const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [fullScreen, setFullScreen] = useState(false);
   const userId = getUserIdFromTokenid();
-
+  
   const updateSavedItem = async (isSave) => {
     updateSavedItemFunction(isSave, userId, item, changeSavedItems, refresh)
   };
@@ -39,6 +39,13 @@ const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
       setSelectedItem(item);
     }
     setShowDetails(!showDetails);
+    setFullScreen(!fullScreen);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedItem(null);
+    setShowDetails(false);
+    setFullScreen(false);
   };
 
   return (
@@ -64,10 +71,13 @@ const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
             {showDetails ? 'פחות מידע' : 'מידע נוסף'}
           </Button>
           <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
+          <Collapse in={!showDetails} sx={{width:'3%' , margin:'1%'}}>
+            <BorrowRequestFile currentItem={item} isApproved={true} />
+          </Collapse>
         </CardActions>
         <Collapse in={showDetails}>
           <CardContent>
-            <ItemDetailScreenComponent currentItem={item} onSelected={() => setSelectedItem(null)} />
+            <ItemDetailScreenComponent currentItem={item} onSelected={() => setSelectedItem(null)} viewProps={fullScreen} onClose={handleCloseDetails} />
           </CardContent>
         </Collapse>
       </CardContent>
