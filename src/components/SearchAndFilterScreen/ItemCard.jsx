@@ -74,7 +74,7 @@ const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
           </Button>
           <SavedItemComponent refresh={refresh} updateSavedItem={updateSavedItem} isSaved={isSaved}  ></SavedItemComponent>
 
-          <Collapse in={!showDetails} sx={{width:'3%' , margin:'1%'}}>
+          <Collapse in={!showDetails} sx={{width:'3%'}}>
             <BorrowRequestFile currentItem={item} isApproved={true} />
           </Collapse>
         </CardActions>

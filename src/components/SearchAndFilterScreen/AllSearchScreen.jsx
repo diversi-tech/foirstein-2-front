@@ -28,7 +28,7 @@ function AllSearchScreen() {
       <Stack>
         {items.length <= 0 ? (
           <>
-            <ItemsList type="recent" />
+            {/* <ItemsList type="recent" /> */}
             <ItemsList type="popular" />
             <ItemsList type="recommended" />
           </>
