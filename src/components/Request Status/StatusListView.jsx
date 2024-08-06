@@ -118,7 +118,12 @@ const StatusListView = () => {
   useEffect(() => {
 
 
-    fetchData();
+   fetchData();
+     const intervalId = setInterval(() => {
+      refreshRequests();
+    }, 30000);
+   
+    return () => clearInterval(intervalId);
   }, []);
 
   const refreshRequests = () => {
