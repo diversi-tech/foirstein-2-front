@@ -75,62 +75,41 @@ export default function ItemDetailsDisplay(props) {
     float: 'right',
     marginTop: '3vh'
   };
-  const alternateBackgroundColor = 0;
-  // index % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
+  
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <List id="itemPropertiesList" sx={style} aria-label="mailbox folders">
-        {Object.entries(currentItem).map(([key, value], index) => {
-          const labelId = `checkbox-list-label-${index}`;
-          const propertyLabel = itemProperties[key];
-         if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount' || value === undefined) return null; // לא להציג את מה שלא רוצים להציג
-        //  const backgroundColor = alternateBackgroundColor % 2 === 0 ? 'rgb(189, 189, 189)' : 'transparent';
-        //  alternateBackgroundColor++;
-          return (
-            <React.Fragment key={key}>
-              <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '12px', backgroundColor }}>
-                <ListItemText
-                  id={labelId}
-                  sx={{ textAlign: 'right', height: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', direction: key === 'filePath' ? 'rtl' : 'ltr' }}
-                >
-                  <div style={{ cursor: key === 'filePath' ? 'pointer' : 'default' }} onClick={() => key === 'filePath' ? handleOpenDialog(value) : undefined}>
-                    {key === 'filePath' ? (
-                       <div
-                       style={{ 
-                         cursor: key === 'filePath' ? 'pointer' : 'default', 
-                         display: 'flex',
-                         alignItems: 'center'
-                       }}
-                       onClick={() => key === 'filePath' ? handleOpenDialog(value) : undefined}
-                     >
-                       <span style={{ margin: '10px' }}>{propertyLabel}: </span>
-                       <span 
-                         style={{ 
-                           margin: '10px',
-                           display: 'inline-block',
-                           maxWidth: '200px',
-                           whiteSpace: 'nowrap',
-                           overflow: 'hidden',
-                           textOverflow: 'ellipsis'
-                         }}
-                       >
-                         {value}
-                       </span>
-                     </div>
-                    ) : (
-                      <>
-                        <span style={{ margin: '10px' }}>{propertyLabel}: </span>
-                        <span style={{ margin: '10px' }}>{key === 'isApproved' ? (value ? 'כן' : 'לא') : value}</span>
-                      </>
-                    )}
-                  </div>
-                </ListItemText>
-              </ListItem>
-              {/* {key !== 'itemType' && <Divider component="li" />} */}
-            </React.Fragment>
-          );
-        })}
-      </List>
+    <div id="itemPropertiesList" sx={style} style={{backgroundColor:'rgb(160 182 200 / 32%)'}} aria-label="mailbox folders">
+      {Object.entries(currentItem).map(([key, value], index) => {
+        const labelId = `checkbox-list-label-${index}`;
+        const propertyLabel = itemProperties[key];
+        if (key === 'title' || key === 'recommended' || key === 'userId' || key === 'amount' || value === undefined) return null; // לא להציג את מה שלא רוצים להציג
+        return (
+          <React.Fragment key={key}>
+            <ListItem className='ListItemDetails' disablePadding sx={{ marginTop: '0px' }}>
+              <ListItemText
+                id={labelId}
+                sx={{ textAlign: 'right', height: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', direction: 'rtl' }}
+              >
+                <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontWeight: 'bold', textAlign: 'right' }}>{propertyLabel}: </span>
+                  <span 
+                    style={{ 
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      cursor: key === 'filePath' ? 'pointer' : 'default',
+                    }} 
+                    onClick={() => key === 'filePath' ? handleOpenDialog(value) : undefined}
+                  >
+                    {key === 'isApproved' ? (value ? 'כן' : 'לא') : value}
+                  </span>
+                </div>
+              </ListItemText>
+            </ListItem>
+          </React.Fragment>
+        );
+      })}
+    </div>
 
       {/* דיאלוג להצגת מיקום הקובץ המלא */}
       <Dialog
