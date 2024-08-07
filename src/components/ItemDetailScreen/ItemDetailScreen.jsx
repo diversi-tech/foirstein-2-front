@@ -70,6 +70,7 @@ const ItemDetailScreenComponent = (props) => {
   };
 
   return (
+    props.flag ? 
     <Dialog
       sx={{ maxWidth: '90%', maxHeight: '90%' }} // Set maximum width and height for the dialog
       open={props.viewProps}
@@ -126,7 +127,55 @@ const ItemDetailScreenComponent = (props) => {
           )}
         </div>
       </Grid>
-    </Dialog>
+    </Dialog> 
+    :
+    <div dir='ltr'>
+    <Grid container justifyContent="center" sx={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'center', height: '100%' }}>
+      <Grid item xs={12} md={6} style={{ textAlign: 'right' }}>
+        <ItemDetailsDisplay currentItem={currentItem} />
+      </Grid>
+      <div style={{ maxWidth: '318px', height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+        {loading ? (
+          <div style={{ maxWidth: '318px' }}>
+            <Box style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 60 }}>
+              <CircularProgress />
+            </Box>
+          </div>
+        ) : (
+          <>
+            <Box width="100%" marginBottom={2}>
+              {initialRating !== null && (
+                <RatingComponent
+                  initialRating={initialRating}
+                  setInitialRating={setInitialRating}
+                  updateRatingNote={updateRatingNote}
+                />
+              )}
+            </Box>
+            {noteText !== null && (
+              <Box width="100%" marginBottom={2}>
+                <NoteComponent
+                  noteText={noteText}
+                  setNoteText={setNoteText}
+                  updateRatingNote={updateRatingNote}
+                />
+              </Box>
+            )}
+            <Box width="100%" marginBottom={2}>
+              <Rtl>
+                <SearchSimilarItems
+                  itemId={itemId}
+                  category={currentItem.category}
+                  onSelected={props.onSelected}
+                />
+              </Rtl>
+            </Box>
+            <itemSuggestionsList currentItem={currentItem}/>
+          </>
+        )}
+      </div>
+    </Grid>
+  </div>
   );
 };
 
