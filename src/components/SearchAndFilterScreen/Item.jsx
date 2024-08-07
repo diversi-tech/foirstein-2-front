@@ -105,7 +105,7 @@ const Item = ({ item, refresh, isSaved, changeSavedItems }) => {
                 </Box>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Box sx={{ marginTop: 2 }}>
-                        {expanded && <ItemDetailScreenComponent currentItem={item} onSelected={onSelected} viewProps={fullScreen} onClose={handleCloseDetails} />}
+                        {expanded && <ItemDetailScreenComponent currentItem={item} onSelected={onSelected} viewProps={fullScreen} onClose={handleCloseDetails} flag={false}/>}
                     </Box>
                 </Collapse>
             </Box>

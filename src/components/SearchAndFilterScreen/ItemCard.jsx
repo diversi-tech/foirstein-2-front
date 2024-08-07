@@ -80,7 +80,7 @@ const ItemCard = ({ item, refresh, isSaved, changeSavedItems }) => {
         </CardActions>
         <Collapse in={showDetails}>
           <CardContent>
-            <ItemDetailScreenComponent currentItem={item} onSelected={() => setSelectedItem(null)} viewProps={fullScreen} onClose={handleCloseDetails} />
+            <ItemDetailScreenComponent currentItem={item} onSelected={() => setSelectedItem(null)} viewProps={fullScreen} onClose={handleCloseDetails} flag={true}/>
           </CardContent>
         </Collapse>
       </CardContent>
