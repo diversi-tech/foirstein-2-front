@@ -35,7 +35,6 @@ export default function ItemDetailsDisplay(props) {
     currentItem.updatedAt = formatDateFromISO(currentItem.updatedAt);
   }
 
-  // הגדרת תכנים להופעה ברשימה
   const itemProperties = {
     id: 'מספר פריט',
     title: 'כותרת',
@@ -62,23 +61,10 @@ export default function ItemDetailsDisplay(props) {
     itemType:'סוג פריט',
     // price: 'מחיר'
   };
-
-  // הגדרת סגנון לרשימה
-  const style = {
-    p: 0,
-    width: '100%',
-    maxWidth: '70%',
-    borderRadius: 2,
-    border: '1px solid',
-    borderColor: 'divider',
-    backgroundColor: 'background.paper',
-    float: 'right',
-    marginTop: '3vh'
-  };
   
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-    <div id="itemPropertiesList" sx={style} style={{backgroundColor:'rgb(160 182 200 / 32%)'}} aria-label="mailbox folders">
+    <div id="itemPropertiesList" style={{backgroundColor:'#E7E6E6', marginTop:'100px', marginBottom:'100px' , borderRadius:'10px', padding:'5px' }} aria-label="mailbox folders">
       {Object.entries(currentItem).map(([key, value], index) => {
         const labelId = `checkbox-list-label-${index}`;
         const propertyLabel = itemProperties[key];
