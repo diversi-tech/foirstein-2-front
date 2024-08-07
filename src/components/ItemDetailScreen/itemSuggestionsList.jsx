@@ -33,6 +33,7 @@ const ItemSuggestionsList = ({ refresh , currentItem }) => {
 
   return (
     <div style={{ width: '66.66%', margin: 'auto' }}>
+      <h2>:פריטים דומים</h2>
       <Grid container spacing={2}>
         {visibleItems.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={item.id}>
