@@ -22,7 +22,7 @@ const ItemSuggestionsList = ({ refresh , currentItem }) => {
   };
 
   useEffect(() => {
-      axios.get(process.env.REACT_APP_SERVER_URL + '/api/Item/itemSuggestions', currentItem)
+      axios.post(process.env.REACT_APP_SERVER_URL + '/api/Item/itemSuggestions', currentItem)
         .then(response => {
           setVisibleItems(response.data.slice(0, 4));
         })
