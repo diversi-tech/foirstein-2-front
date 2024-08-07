@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import StatusListView from "./Request Status/StatusListView";
 import AllSearchScreen from "./SearchAndFilterScreen/AllSearchScreen";
 import SavedItemsScreen from "./SavedItemsScreen/SavedItemsScreen";
+import AddBookRequest from "./AddBookRequestScreen/addBookRequest";
 
 function ExternalRedirect({ url }) {
   useEffect(() => {
@@ -21,12 +22,12 @@ function ExternalRedirect({ url }) {
 export const Routing = () => {
   return (
     <HashRouter>
-      <Nav/>
-     
+      <Nav />
+
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
-{/*         <Route path="/" element={<AllSearchScreen />} /> */}
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
+        <Route path="/addBookRequest" element={<AddBookRequest />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
         <Route path='/Charts' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Charts" />} />

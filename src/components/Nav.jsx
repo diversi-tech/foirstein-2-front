@@ -103,9 +103,12 @@ export const Nav = () => {
     navigate('/home');
     console.log('Logging out...');
   };
-
+  
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const  handleAddBookRequest = (event) => {
+    navigate('/addBookRequest');
   };
 
   const handleMenuClose = () => {
@@ -285,7 +288,8 @@ export const Nav = () => {
                 >
                   <MenuItem onClick={handleProfileClick}>ניהול חשבון</MenuItem>
                   <MenuItem onClick={handleProfileClickToRequestStatus}>רשימת השאלות</MenuItem>
-                  <MenuItem onClick={handleProfileClickSavedItemsScreen}>מאגר אישי </MenuItem>
+                  <MenuItem onClick={handleProfileClickSavedItemsScreen}>מאגר אישי </MenuItem> 
+                  <MenuItem onClick={handleAddBookRequest}>בקשה להוספת פריט</MenuItem>
                   <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
               </>
