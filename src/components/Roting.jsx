@@ -6,11 +6,13 @@ import { Nav } from "./Nav";
 
 import '../App.css';
 import Footer from "./footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import StatusListView from "./Request Status/StatusListView";
 import AllSearchScreen from "./SearchAndFilterScreen/AllSearchScreen";
 import SavedItemsScreen from "./SavedItemsScreen/SavedItemsScreen";
 import AddBookRequest from "./AddBookRequestScreen/addBookRequest";
+import Item from "./SearchAndFilterScreen/Item";
+import BarcodeScanner from "./BarcodeScanner";
 
 function ExternalRedirect({ url }) {
   useEffect(() => {
@@ -20,13 +22,19 @@ function ExternalRedirect({ url }) {
 }
 
 export const Routing = () => {
+
+  const [item, setItem] = useState(null);
+
   return (
     <HashRouter>
+      <BarcodeScanner setItem={setItem} />
       <Nav />
 
       <Routes>
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
+        <Route path="/borrow" element={<Item item={item} />} />
+        <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/addBookRequest" element={<AddBookRequest />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
