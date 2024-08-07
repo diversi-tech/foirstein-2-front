@@ -64,7 +64,7 @@ export default function ItemDetailsDisplay(props) {
   
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-    <div id="itemPropertiesList" style={{backgroundColor:'#E7E6E6', marginTop:'50px', marginBottom:'50px' , borderRadius:'10px', padding:'5px' }} aria-label="mailbox folders">
+    <div id="itemPropertiesList" style={{backgroundColor:'#E7E6E6', marginTop:'50px', marginBottom:'50px' , marginLeft:'10px', borderRadius:'10px', padding:'5px' }} aria-label="mailbox folders">
       {Object.entries(currentItem).map(([key, value], index) => {
         const labelId = `checkbox-list-label-${index}`;
         const propertyLabel = itemProperties[key];
