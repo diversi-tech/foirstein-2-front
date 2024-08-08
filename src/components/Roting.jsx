@@ -31,12 +31,16 @@ export const Routing = () => {
       <Nav />
 
       <Routes>
+        
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/SearchAppBar" element={<AllSearchScreen />} />
         <Route path="/borrow" element={<Item item={item} />} />
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/addBookRequest" element={<AddBookRequest />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
+        <Route path="/items/borrowingItems" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/items/borrowingItems" />} />
+            <Route path="/borrowing" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/borrowing" />} />
+            <Route path="/returning" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/returning" />} />
         <Route path='/ActivityLog' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/ActivityLog" />} />
         <Route path='/Charts' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Charts" />} />
         <Route path='/changePermission' element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/changePermission" />} />
