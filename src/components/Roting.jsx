@@ -38,7 +38,7 @@ export const Routing = () => {
         <Route path="/StatusListView" element={<StatusListView />} />
         <Route path="/addBookRequest" element={<AddBookRequest />} />
         <Route path="/SavedItemsScreen" element={<SavedItemsScreen />} />
-        <Route path="/tasks/:userId" element={<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#/Tasks" />} />
+        <Route path='/LibrariansTable' element={<<ExternalRedirect url="https://login.foirstein.diversitech.co.il/#LibrariansTable />} />
         <Route path="/items/borrowingItems" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/items/borrowingItems" />} />
         <Route path="/borrowing" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/borrowing" />} />
         <Route path="/returning" element={<ExternalRedirect url="https://librarian.foirstein.diversitech.co.il/#/returning" />} />
