@@ -185,6 +185,7 @@ export const Nav = () => {
           {role === 'Admin' && (
             <>
               <AdminButton
+                onClick={() => navigate('/ActivityLog')}
                 onMouseEnter={handleAdminMenuOpen}
                 onMouseLeave={handleAdminMenuClose}
                 active={isAdminMenuOpen || ['/ActivityLog', '/changePermission', '/Charts', '/ManagerDashboard'].includes(location.pathname)}
@@ -225,15 +226,16 @@ export const Nav = () => {
               </Popper>
             </>
           )}
-     {(role === 'Librarian'||role === 'Admin') && (
-                      <>
-                        <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
-                             ניהול משתמשים
-                       </StyledLink>
-                       <AdminButton
+    {(role === 'Librarian' || role === 'Admin') && (
+            <>
+              <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
+                ניהול משתמשים
+              </StyledLink>
+              <AdminButton
+                onClick={() => navigate('/items')}
                 onMouseEnter={handleLibarianMenuOpen}
                 onMouseLeave={handleLibarianMenuClose}
-                active={islibarianMenuOpen || ['/items', '/itemsPendingApproval', '/studentRequest', ,'/tag-list'].includes(location.pathname)}
+                active={islibarianMenuOpen || ['/items', '/itemsPendingApproval', '/studentRequest', '/tag-list'].includes(location.pathname)}
                 ref={(node) => {
                   setlibarianAnchorEl(node);
                 }}
