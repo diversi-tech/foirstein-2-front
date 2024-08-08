@@ -53,9 +53,9 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
     untilDate: formattedNextDate
   };
   // Add the new object to the 'i' array
-  i.push(newObject1);
-  iApproval.push(newObject)
-  i1.push(newObject)
+  // i.push(newObject1);
+  // iApproval.push(newObject)
+  // i1.push(newObject)
 
 
   const isDateDisabled = (day) => {
@@ -189,11 +189,11 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'bottom',
+            vertical: 'center',
             horizontal: 'center',
           }}
           transformOrigin={{
-            vertical: 'bottom',
+            vertical: 'center',
             horizontal: 'center',
           }}
       
