@@ -8,9 +8,9 @@ import DateRangePickerExample from './TestReact';
 import "./dateRangePickker.css"
 
 export default function BorrowRequestFile({ currentItem, isApproved }) {
-    const currentUser = useSelector(state => state.userReducer.currentUser);
-    const currentUserId = currentUser ? currentUser.userId : 0;
+    
 
+    const currentUserId =    getUserIdFromTokenid();
 
     const [open, setOpen] = useState(false);
     const currentDate = new Date();
@@ -21,7 +21,7 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
     const [borrowRequest, setBorrowRequest] = useState({
         requestId: 0,
         itemId: 0,
-        userId: 1,
+        userId: currentUserId,
         isWaiting: false,
         requestDate: currentDate.toISOString(),
         approvalDate: null,
