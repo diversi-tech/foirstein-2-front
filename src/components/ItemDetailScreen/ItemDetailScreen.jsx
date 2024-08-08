@@ -8,7 +8,7 @@ import axios from 'axios';
 import Rtl from './Rtl';
 import { getUserIdFromTokenid } from '../decipheringToken';
 import BorrowRequestFile from '../BorrowRequestScreen/borrowRequestFile';
-import itemSuggestionsList from './itemSuggestionsList';
+import ItemSuggestionsList from './itemSuggestionsList';
 
 const ItemDetailScreenComponent = (props) => {
   const { currentItem, onClose } = props;
