@@ -18,17 +18,30 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
     const [righatDate, setRighatDate] = useState(false);
     const [fromDate, setFromDate] = useState(new Date());
     const [untilDate, setUntilDate] = useState(new Date());
+    // const [borrowRequest, setBorrowRequest] = useState({
+    //     requestId: 0,
+    //     itemId: 0,
+    //     userId: currentUserId,
+    //     isWaiting: false,
+    //     requestDate: currentDate.toISOString(),
+    //     approvalDate: null,
+    //     fromDate: fromDate.toISOString(),
+    //     untilDate: untilDate.toISOString(),
+    //     TotalPrice: 0,
+    //     requestStatus: 0
+    // });
     const [borrowRequest, setBorrowRequest] = useState({
+
+
         requestId: 0,
-        itemId: 0,
+        itemId: currentItem.id,
         userId: currentUserId,
         isWaiting: false,
         requestDate: currentDate.toISOString(),
         approvalDate: null,
         fromDate: fromDate.toISOString(),
         untilDate: untilDate.toISOString(),
-        TotalPrice: 0,
-        requestStatus: 0
+        totalPrice: 0,
     });
     const [i, setI] = useState([]);
     const [iApproval, setIApproval] = useState([]);
