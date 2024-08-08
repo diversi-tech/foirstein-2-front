@@ -10,11 +10,10 @@ import Button from '@mui/material/Button';
 import "./dateRangePickker.css"
 import moment from 'moment';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-
-export default function DateRangePickerExample({ borrowRequest, setBorrowRequest, righatDate, setRighatDate, i, setI, iApproval, setIApproval }) {
+export default function DateRangePickerExample({ borrowRequest, setBorrowRequest, righatDate, setRighatDate, i, setI, iApproval, setIApproval,currentItem }) {
   const excludeShabatAndHolidays = dontSelectShabatAndHolidays();
 
-  const maxSelectableDays = 7;
+  const maxSelectableDays = currentItem.numberOfDaysOfQuestion;
   const i1 = [];
   const [startDay, setStartDay] = useState(null);
   const [endDay, setEndDay] = useState(null);
@@ -36,11 +35,6 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
-
-
-
-
-
   const today = new Date();
   const nextDate = new Date(today);
   nextDate.setDate(today.getDate() + 7);
@@ -113,23 +107,18 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
     const endDate = moment(day2.date);
     const selectedDate1 = day1.date.toISOString().split('T')[0];
     const selectedDate2 = day2.date.toISOString().split('T')[0];
-
-    
       const diffInDays = endDate.diff(startDate, 'days');
-
       if (diffInDays > maxSelectableDays) {
         setTecxtPop(`אתה יכול לבחור מקסימום ${maxSelectableDays} ימים`);
         setAnchorEl(document.body);} 
         // Set the anchor element to body to open the Popover
-        else if(diffInDays <= maxSelectableDays){
+        if(diffInDays <= maxSelectableDays){
         iApproval.some(request => {
           const fromDate = new Date(request.fromDate).toISOString().split('T')[0];
           const untilDate = new Date(request.untilDate).toISOString().split('T')[0];
-  
           if ((selectedDate1 >= fromDate && selectedDate1 <= untilDate) ||
             (selectedDate2 >= fromDate && selectedDate2 <= untilDate)) {
               setRequestSubmitted(true);
-
             setTecxtPop(`הוגשה כבר בקשה לימים אלו 
               לכניסה להמתנה ,`);
             setWait(true)
@@ -137,7 +126,7 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
           }
         })}
       
-    else{
+        if(diffInDays <= maxSelectableDays&&!wait){
       setStartDay(startDate.format('YYYY-MM-DD'));
       setEndDay(endDate.format('YYYY-MM-DD'));
 
@@ -163,6 +152,7 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
     <>
 
 
+<div style={{width: "70%", justifyContent: "center", alignItems: "center", margin: "0 auto"}}>
 
       <ReactJewishDatePicker
 
@@ -190,7 +180,7 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
 
       />
 
-      <div>
+      <div >
 
         <Popover
 
@@ -200,12 +190,14 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
           onClose={handleClose}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'center',
           }}
           transformOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
           }}
+      
+     
         >
           <Typography sx={{ p: 2 }}> {tecxtPop}
             <span onClick={handleClose} style={{ marginLeft: '10px', marginTop: '4px', width: '20px' }}><ClearOutlinedIcon /></span>
@@ -215,13 +207,13 @@ export default function DateRangePickerExample({ borrowRequest, setBorrowRequest
 
             {wait && <Button sx={{
               backgroundColor: "white", color: "#371f80 ", '&:hover': {
-                backgroundColor: '#ff0000', // Set background color to red on hover
+                backgroundColor: '#b8c548', // Set background color to red on hover
               }
             }} variant="contained" onClick={borrowRequestWithWait} >לאישור</Button>}
           </Typography>
         </Popover>
       </div>
-
+</div>
     </>
 
   );

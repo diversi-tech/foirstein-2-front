@@ -1,9 +1,11 @@
 
 import axios from "axios";
 const urlService = "https://localhost:7118/api/BorrowRequest/"
+// const urlService = "process.env.REACT_APP_SERVER_URL/api/BorrowRequest/"
+
 export const AddBorrowRequest = async (borrowRequest) => {
     try
-    {
+    {debugger
         let data = await axios.post(`${urlService}AddBorrowRequest`,borrowRequest)
         if (data)
         {
