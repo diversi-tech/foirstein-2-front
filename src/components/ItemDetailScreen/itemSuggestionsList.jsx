@@ -36,7 +36,7 @@ const ItemSuggestionsList = ({ refresh , currentItem }) => {
       <h2 style={{textAlign:'right'}}>:פריטים דומים</h2>
       <Grid container spacing={2}>
         {visibleItems.map((item) => (
-          <Grid item xs={14} sm={14} md={14} lg={10} xl={10} key={item.id}>
+          <Grid item xs={14} sm={14} md={14} lg={14} xl={10} key={item.id}>
             <ItemCard item={item} refresh={refresh} isSaved={isSavedItem(refresh, item, savedItems)} changeSavedItems={changeSavedItems} />
           </Grid>
         ))}
