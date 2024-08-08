@@ -122,7 +122,7 @@ const ItemDetailScreenComponent = (props) => {
               <Box sx={{ width: '100%', alignItems: 'center' }}>
                 <BorrowRequestFile currentItem={currentItem} isApproved={true} />
               </Box>
-              <itemSuggestionsList currentItem={currentItem}/>
+              <ItemSuggestionsList currentItem={currentItem}/>
             </>
           )}
         </div>
