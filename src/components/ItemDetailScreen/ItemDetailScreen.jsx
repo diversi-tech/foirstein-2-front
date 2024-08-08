@@ -13,8 +13,7 @@ import ItemSuggestionsList from './itemSuggestionsList';
 const ItemDetailScreenComponent = (props) => {
   const { currentItem, onClose } = props;
   const itemId = currentItem.id;
-  // const userId = getUserIdFromTokenid();
-  const userId = 1
+  const userId = getUserIdFromTokenid();
   const [initialRating, setInitialRating] = useState(null);
   const [noteText, setNoteText] = useState(null);
   const [loading, setLoading] = useState(true);
