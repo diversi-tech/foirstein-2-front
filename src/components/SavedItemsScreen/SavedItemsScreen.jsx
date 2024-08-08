@@ -6,32 +6,24 @@ import SortingComponent from './sort';
 import Rtl from '../ItemDetailScreen/Rtl';
 import { useTheme } from '@mui/material/styles';
 import { getUserIdFromTokenid } from '../decipheringToken';
+import { fetchData } from '../../utils/SavedItemsService';
 
 function SavedItemsScreen() {
-      const userId = getUserIdFromTokenid();
-    const apiUrl = process.env.REACT_APP_SERVER_URL;
+    const userId = getUserIdFromTokenid();
     const [items, setItems] = useState(null);
     const theme = useTheme();
     const [sortBy, setSortBy] = useState('');
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`${apiUrl}/api/Item/ReadSavedItems/${userId}`);
-            setItems(response.data);
-            return true;
-        } catch (error) {
-            console.error('Error fetching saved items:', error);
-            setItems([]);
-        }
-    };
-
     useEffect(() => {
-        fetchData();
+        const fetch = async () => {
+            await fetchData(userId, setItems);
+        };
+        fetch();
     }, []);
 
 
     const refresh = async (itemId) => {
-        await fetchData()
+        await fetchData(userId, setItems);
         await handleSortChange(sortBy, itemId);
     };
 
