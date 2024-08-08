@@ -7,6 +7,7 @@ import { store } from './redux/store.jsx';
 import { Routing } from './components/Roting.jsx';
 import StatusListView from './components/Request Status/StatusListView.jsx';
 import AllSearchScreen from './components/SearchAndFilterScreen/AllSearchScreen.jsx';
+import BorrowRequestFile from './components/BorrowRequestScreen/borrowRequestFile.jsx';
 // import { Routing } from './components/routing.jsx';
 
 function App() {
@@ -15,9 +16,7 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <div className="App">
-
           <Routing />
-
         </div>
       </ThemeProvider>
     </Provider>

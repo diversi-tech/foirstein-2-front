@@ -241,6 +241,8 @@
     max-height: calc(100% - 32px);
     outline: 0;
 }
+
+
 .disabled-button {
   background-color: #b8c548;
   opacity: 0.5; 
