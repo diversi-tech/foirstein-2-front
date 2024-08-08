@@ -21,7 +21,7 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
     const [borrowRequest, setBorrowRequest] = useState({
         requestId: 0,
         itemId: 0,
-        userId: currentUserId,
+        userId: 1,
         isWaiting: false,
         requestDate: currentDate.toISOString(),
         approvalDate: null,
