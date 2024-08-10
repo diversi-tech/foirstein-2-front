@@ -9,8 +9,6 @@ import "./dateRangePickker.css"
 import { getUserIdFromTokenid } from '../decipheringToken';
 
 export default function BorrowRequestFile({ currentItem, isApproved }) {
-    
-
     const currentUserId =    getUserIdFromTokenid();
 
     const [open, setOpen] = useState(false);
