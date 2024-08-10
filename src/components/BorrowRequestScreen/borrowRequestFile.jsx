@@ -6,83 +6,10 @@ import { AddBorrowRequest, GetBorrowRequestsAndApprovalsByItemId } from "../../u
 import CustomDateRangePicker from "./calendar"
 import DateRangePickerExample from './TestReact';
 import "./dateRangePickker.css"
+import { getUserIdFromTokenid } from '../decipheringToken';
 
 export default function BorrowRequestFile({ currentItem, isApproved }) {
-    const currentUser = useSelector(state => state.userReducer.currentUser);
-    const currentUserId = currentUser ? currentUser.userId : 0;
-    console.log( "currentItem  ",currentItem)
-
-
-
-//     accompanyingMaterial
-// : 
-// "חומר נלווה"
-// amount
-// : 
-// 0
-// author
-// : 
-// "ליבי קליין"
-// category
-// : 
-// "קטגוריה"
-// createdAt
-// : 
-// "0001-01-01T00:00:00"
-// description
-// : 
-// "רגש"
-// edition
-// : 
-// "מהדורה"
-// filePath
-// : 
-// "shelf 3"
-// hebrewPublicationYear
-// : 
-// "תשס\"ט"
-// id
-// : 
-// 23
-// isApproved
-// : 
-// true
-// itemLevel
-// : 
-// 0
-// itemType
-// : 
-// 0
-// language
-// : 
-// "עברית"
-// note
-// : 
-// "הערותתתת"
-// numOfSeries
-// : 
-// 4
-// numberOfDaysOfQuestion
-// : 
-// 3
-// publishingYear
-// : 
-// 2004
-// recommended
-// : 
-// true
-// series
-// : 
-// "בדרה"
-// title
-// : 
-// "גם כי אלך"
-// updatedAt
-// : 
-// "0001-01-01T00:00:00"
-// userId
-// : 
-
+    const currentUserId =    getUserIdFromTokenid();
     const [open, setOpen] = useState(false);
     const currentDate = new Date();
     currentDate.toISOString();
@@ -90,16 +17,17 @@ export default function BorrowRequestFile({ currentItem, isApproved }) {
     const [fromDate, setFromDate] = useState(new Date());
     const [untilDate, setUntilDate] = useState(new Date());
     const [borrowRequest, setBorrowRequest] = useState({
+
+
         requestId: 0,
-        itemId: 0,
+        itemId: currentItem.id,
         userId: currentUserId,
         isWaiting: false,
         requestDate: currentDate.toISOString(),
         approvalDate: null,
         fromDate: fromDate.toISOString(),
         untilDate: untilDate.toISOString(),
-        TotalPrice: 0,
-        requestStatus: 0
+        totalPrice: 0,
     });
     const [i, setI] = useState([]);
     const [iApproval, setIApproval] = useState([]);
