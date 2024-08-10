@@ -185,6 +185,7 @@ export const Nav = () => {
           {role === 'Admin' && (
             <>
               <AdminButton
+                onClick={() => navigate('/ActivityLog')}
                 onMouseEnter={handleAdminMenuOpen}
                 onMouseLeave={handleAdminMenuClose}
                 active={isAdminMenuOpen || ['/ActivityLog', '/changePermission', '/Charts', '/ManagerDashboard'].includes(location.pathname)}
@@ -216,6 +217,7 @@ export const Nav = () => {
                           <MenuItem onClick={() => navigate('/changePermission')}>שינוי הרשאות</MenuItem>
                           <MenuItem onClick={() => navigate('/Charts')}>גרפים</MenuItem>
                           <MenuItem onClick={() => navigate('/ManagerDashboard')}>דוחות</MenuItem>
+                          <MenuItem onClick={() => navigate('/LibrariansTable')}>ביצועי ספרניות</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>
@@ -224,15 +226,16 @@ export const Nav = () => {
               </Popper>
             </>
           )}
-     {(role === 'Librarian'||role === 'Admin') && (
-                      <>
-                        <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
-                             ניהול משתמשים
-                       </StyledLink>
-                       <AdminButton
+    {(role === 'Librarian' || role === 'Admin') && (
+            <>
+              <StyledLink to="/UserManagementComponent" active={location.pathname === '/UserManagementComponent'}>
+                ניהול משתמשים
+              </StyledLink>
+              <AdminButton
+                onClick={() => navigate('/items')}
                 onMouseEnter={handleLibarianMenuOpen}
                 onMouseLeave={handleLibarianMenuClose}
-                active={islibarianMenuOpen || ['/items', '/itemsPendingApproval', '/studentRequest', ,'/tag-list'].includes(location.pathname)}
+                active={islibarianMenuOpen || ['/items', '/itemsPendingApproval', '/studentRequest', '/tag-list'].includes(location.pathname)}
                 ref={(node) => {
                   setlibarianAnchorEl(node);
                 }}
@@ -260,6 +263,9 @@ export const Nav = () => {
                           <MenuItem onClick={() => navigate('/itemsPendingApproval')}>ממתינים לאישור </MenuItem>
                           <MenuItem onClick={() => navigate('/studentRequest')}>בקשות של תלמידות</MenuItem>
                           <MenuItem onClick={() => navigate('/tag-list')}>ניהול תגיות</MenuItem>
+                          <MenuItem onClick={() => navigate('/items/borrowingItems')}>פריטים מושאלים</MenuItem>
+                          <MenuItem onClick={() => navigate('/borrowing')}>טופס השאלה</MenuItem>
+                          <MenuItem onClick={() => navigate('/returning')}>טופס החזרה</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>

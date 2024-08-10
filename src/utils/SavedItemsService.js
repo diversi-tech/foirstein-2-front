@@ -26,7 +26,7 @@ export const updateSavedItemFunction = async (isSave, userId, item, changeSavedI
         savedItem: isSave,
     }
     console.log(thisRatingNote);
-    const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
+    const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote`, thisRatingNote, {
         headers: {
             'Content-Type': 'application/json'
         }

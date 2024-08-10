@@ -329,7 +329,7 @@ const StatusListView = () => {
                               )}
                             </IconButton>
                           </TableCell>
-                          {/* {isMediumScreen && (
+                          {isMediumScreen && (
                             <>
                               <TableCell align="center">
                                 {new Date(row.untilDate).toLocaleDateString('he-IL')||'-'}
@@ -338,8 +338,8 @@ const StatusListView = () => {
                                 {new Date(row.fromDate).toLocaleDateString('he-IL')||'-'}
                               </TableCell>
                             </>
-                          )} */}
-                          {isMediumScreen && (
+                          )}
+{/*                           {isMediumScreen && (
                             <>
                               <TableCell align="center">
                                 {new Date(row.approvalDate).toLocaleDateString('he-IL')}
@@ -348,7 +348,7 @@ const StatusListView = () => {
                                 {new Date(row.requestDate).toLocaleDateString('he-IL')}
                               </TableCell>
                             </>
-                          )}
+                          )} */}
 
                           <TableCell align="center">
                             <Button onClick={() => setShowIcons(!showIcons)}>

@@ -54,7 +54,7 @@ const ItemDetailScreenComponent = (props) => {
       thisRatingNote.note = value;
     }
     try {
-      const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote/0`, thisRatingNote, {
+      const response = await axios.put(`${apiUrl}/api/RatingNote/PutRatingNote`, thisRatingNote, {
         headers: {
           'Content-Type': 'application/json'
         }
