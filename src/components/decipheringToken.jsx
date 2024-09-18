@@ -32,9 +32,8 @@ export const getRoleFromToken = () => {
     debugger
     if (!token) return null;
     try {
-      //const decoded = jwtDecode(token);
-      //return decoded['tz'];
-      return 8;
+      const decoded = jwtDecode(token);
+      return decoded['tz'];
     } catch (error) {
       console.error('Error decoding token:', error);
       return null;
