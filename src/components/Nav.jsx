@@ -77,7 +77,6 @@ const getGreetingMessage = () => {
 export const Nav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  //const [isLoggedIn, setIsLoggedIn] = true;
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie('jwt'));
   const [anchorEl, setAnchorEl] = useState(null);
   const [adminAnchorEl, setAdminAnchorEl] = useState(null);
@@ -85,9 +84,7 @@ export const Nav = () => {
   const [libarianAnchorEl, setlibarianAnchorEl] = useState(null);
   const [islibarianMenuOpen, setIslibarianMenuOpen] = useState(false);
   const greetingMessage = getGreetingMessage();
-  //const role = 'Admin';
   const role = isLoggedIn ? getRoleFromToken() : null;
-  //const userName = hinda;
   const userName = isLoggedIn ? getUserNameFromToken() : null;
 
   useEffect(() => {
